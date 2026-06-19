@@ -7,7 +7,7 @@
 
     try {
         // Añadimos un parámetro de tiempo para evitar que el navegador use datos viejos (caché)
-        const response = await fetch('https://ls-api-b1.vercel.app/leaderboard?t=' + Date.now());
+        const response = await fetch('https://vokblo-backend-idioms.vercel.app/leaderboard?t=' + Date.now());
         const data = await response.json();
 
         console.log("Revisando datos del ranking:", data.leaderboard);

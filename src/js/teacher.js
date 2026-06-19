@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', async () => {
     // --- CONFIGURACIÓN PRINCIPAL ---
-    const API_BASE_URL = 'https://ls-api-b1.vercel.app';
+    const API_BASE_URL = 'https://vokblo-backend-idioms.vercel.app/';
     // ---------------------------------
 
     // --- VARIABLES GLOBALES PARA DATOS Y BÚSQUEDA ---
