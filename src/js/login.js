@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             try {
-                const response = await fetch('https://ls-api-b1.vercel.app/auth/login', {
+                const response = await fetch('https://vokblo-backend-idioms.vercel.app/auth/login', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
