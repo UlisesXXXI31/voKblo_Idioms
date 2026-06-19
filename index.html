@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>voKblo</title>
+    <title>Idioms</title>
     <link rel="manifest" href="assets/icons/manifest.json" />
     <link rel="stylesheet" href="src/css/style.css" />
     <link rel="icon" type="image/jpeg" href="assets/images/favicon-32x32.png">
@@ -14,10 +14,10 @@
     <div id="app-container" class="pantalla-oculta">
         <header>
             <div style="display: flex; justify-content: space-between; align-items: center;">
-                <button id="btn-logout">Cerrar Sesión</button>
+                <button id="btn-logout">log out</button>
                 
                 <div style="text-align: right;">
-                    <p id="puntos" style="font-weight: bold; margin: 0;">Puntos totales: 0</p>
+                    <p id="puntos" style="font-weight: bold; margin: 0;">Total points: 0</p>
                     <div id="racha-display-container" style="display:flex; align-items:center; justify-content: flex-end;">
                         Racha: <span id="racha-numero" style="margin: 0 5px;">0</span>
                         <img id="racha-imagen" src="assets/images/fire-100.gif" style="width: 20px; visibility: hidden;" />
@@ -30,15 +30,15 @@
                 <button id="btn-ver-historial">Ver historial</button>
                 <button id="btn-ranking" style="background-color: #ffeb3b; border: 1px solid #fbc02d;">Clasificación 🏆</button>
                 <button id="btn-guardar-puntos" style="background-color: #4caf50; color: white; font-weight: bold; padding: 10px;">
-                    Guardar Puntos (Profesor)
+                    Save points (teacher)
                 </button>
-                <button id="btn-reiniciar-puntos" style="font-size: 10px;">Reiniciar sesión</button>
+                <button id="btn-reiniciar-puntos" style="font-size: 10px;">restart session</button>
             </div>
         </header>
 
         <!-- Pantalla de Lecciones -->
         <section id="pantalla-lecciones" class="pantalla pantalla-oculta">
-            <h2>Selecciona una lección</h2>
+            <h2>choose a lesson</h2>
             <div id="lecciones-container" class="grid"></div>
         </section>
 
@@ -46,7 +46,7 @@
         <section id="pantalla-actividades" class="pantalla pantalla-oculta">
             <h2 id="titulo-leccion"></h2>
              <div id="control-estudio" style="background: #fff3e0; padding: 10px; border-radius: 8px; margin: 10px 0;">
-    <label>🎯 Estudiar esta semana:</label>
+    <label>🎯 What to study this week:</label>
     <select id="selector-bloque-examen" style="width: 100%; padding: 8px;">
         <option value="1">Bloque 1 (1 - 20)</option>
         <option value="2">Bloque 2 (21 - 40)</option>
@@ -54,10 +54,10 @@
         <option value="4">Bloque 4 (61 - 80)</option>
         <option value="5">Bloque 5 (81 - 100)</option>
         <option value="6">Bloque 6 (101 -120)</option>
-        <option value="todos">Repaso General</option>
+        <option value="todos">general review</option>
     </select>
 </div>
-            <h3>Selecciona una actividad</h3>
+            <h3>Choose one activity</h3>
             <div id="actividades-container" class="grid"></div>
         </section>
 
@@ -66,15 +66,15 @@
             <h2 id="titulo-actividad"></h2>
             <div id="actividad-juego"></div>
             <div style="margin-top: 20px;">
-                <button id="btn-volver-lecciones" class="btn-volver">Volver a Lecciones</button>
-                <button class="btn-volver" id="btn-volver-actividades">Volver a actividades</button>
+                <button id="btn-volver-lecciones" class="btn-volver">Back to the lessons</button>
+                <button class="btn-volver" id="btn-volver-actividades">Back to the activities</button>
             </div>
             <div id="mensaje-feedback" style="font-weight:bold; text-align:center; margin-top:1rem;"></div>
         </section>
 
         <!-- Pantalla UNIFICADA para el Test de Contexto -->
         <section id="pantalla-contexto" class="pantalla pantalla-oculta">
-            <h2>Examen de Vocabulario</h2>
+            <h2>Test of vocabulary</h2>
             
             <!-- Configuración del Bloque -->
             <div id="config-test" style="background: #f9f9f9; padding: 20px; border-radius: 10px; border: 1px solid #ddd;">
@@ -105,28 +105,28 @@
             <h2 id="titulo-lista-leccion"></h2>
             <div id="lista-palabras-container" style="margin-top: 1rem;"></div>
             <div style="margin-top: 1.5rem;">
-                <button id="btn-ir-actividades" class="btn-volver">Ir a Actividades</button>
-                <button id="btn-volver-lista" class="btn-volver">Volver a Lecciones</button>
+                <button id="btn-ir-actividades" class="btn-volver">go to activities</button>
+                <button id="btn-volver-lista" class="btn-volver">Back to lessons</button>
             </div>
         </section>
 
         <!-- Historial -->
         <div id="pantalla-historial" class="pantalla pantalla-oculta">
-            <h2>Historial de puntuaciones</h2>
+            <h2>Score history</h2>
             <div id="historial-container"></div>
-            <button id="btn-salir-historial">Volver</button>
+            <button id="btn-salir-historial">Back</button>
         </div>
 
         <!-- Ranking -->
         <div id="pantalla-ranking" class="pantalla pantalla-oculta">
-            <h2 id="titulo-liga-ranking">Clasificación - Liga Bronce</h2>
+            <h2 id="titulo-liga-ranking">Ranking - Bronze League</h2>
             <div id="ranking-container" style="margin: 20px 0;">
                 <table style="width: 100%; border-collapse: collapse;">
                     <thead>
                         <tr style="border-bottom: 2px solid #ddd;">
                             <th>#</th>
-                            <th>Alumno</th>
-                            <th>Puntos (XP)</th>
+                            <th>Student</th>
+                            <th>Points (XP)</th>
                         </tr>
                     </thead>
                     <tbody id="lista-ranking"></tbody>
@@ -136,7 +136,7 @@
         </div>
         <!-- Pantalla de Flashcards -->
 <section id="pantalla-flashcards" class="pantalla pantalla-oculta">
-    <h2>Tarjetas de Memoria</h2>
+    <h2>Flashcards</h2>
     <p id="flash-progreso" style="font-weight: bold; color: #666;"></p>
 
     <!-- Escenario 3D -->
@@ -157,11 +157,11 @@
 
     <!-- Controles de navegación -->
     <div class="flashcard-controles">
-        <button id="btn-flash-prev" class="btn-volver">Anterior</button>
-        <button id="btn-flash-next" class="actividad-btn">Siguiente</button>
+        <button id="btn-flash-prev" class="btn-volver">previous</button>
+        <button id="btn-flash-next" class="actividad-btn">next</button>
     </div>
      <div style="margin-top: 30px; display: flex; flex-direction: column; gap: 10px; align-items: center;">
-        <button id="btn-flash-volver" class="btn-volver">Ir a Actividades</button>
+        <button id="btn-flash-volver" class="btn-volver">go to activities</button>
      </div>
                 
 </section>
