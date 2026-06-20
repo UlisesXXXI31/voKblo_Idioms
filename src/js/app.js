@@ -23,10 +23,6 @@ document.addEventListener("DOMContentLoaded", () => {
     // ---- VARIABLES GLOBALES Y ELEMENTOS DEL DOM ----
     
    
-   
-
-     
-
     // Elementos del DOM
     const pantallaLecciones = document.getElementById("pantalla-lecciones");
     const pantallaActividades = document.getElementById("pantalla-actividades");
@@ -141,7 +137,7 @@ registerServiceWorker();
         tabla.innerHTML = "<thead><tr><th>Alemán</th><th>Español</th></tr></thead><tbody></tbody>";
         leccion.palabras.forEach(par => {
             const fila = document.createElement("tr");
-            fila.innerHTML = `<td>${par.aleman}</td><td>${par.espanol}</td>`;
+            fila.innerHTML = `<td>${par.ingles}</td><td>${par.espanol}</td>`;
             tabla.querySelector("tbody").appendChild(fila);
         });
         listaPalabrasContainer.appendChild(tabla);
@@ -233,11 +229,11 @@ registerServiceWorker();
             mostrarLecciones();
         });
     }
-   // Dentro de tu DOMContentLoaded en app.js
+  
 // --- DENTRO DEL EVENTO DOMContentLoaded ---
 
 // 1. Botón para ABRIR el ranking
-// IMPORTANTE: Verifica que en tu HTML el botón tenga id="btn-ranking"
+// IMPORTANTE: Verificar que en el HTML el botón tenga id="btn-ranking"
 const btnRanking = document.getElementById('btn-ranking'); 
 if (btnRanking) {
     btnRanking.addEventListener('click', () => {
