@@ -26,7 +26,7 @@ function actualizarContenidoTarjeta() {
     tarjeta.classList.remove("girada");
 
     // 2. Cambiar los textos (Usamos los IDs que pusimos en el HTML)
-    document.getElementById("flash-texto-aleman").textContent = item.aleman;
+    document.getElementById("flash-texto-aleman").textContent = item.ingles;
     document.getElementById("flash-texto-espanol").textContent = item.espanol;
     document.getElementById("flash-texto-frase").textContent = item.frase || "";
     document.getElementById("flash-progreso").textContent = `Tarjeta ${indiceFlash + 1} de ${listaFlashcards.length}`;
