@@ -150,10 +150,10 @@ registerServiceWorker();
         actividadesContainer.innerHTML = "";
         const actividades = [
             { id: "flashcards", nombre: "Flash Cards" },
-            { id: "traducir", nombre: "Traducir" },
-            { id: "emparejar", nombre: "Emparejar" },
-            { id: "eleccion-multiple", nombre: "Elección múltiple" },
-            { id: "contexto", nombre: "Test de Contexto (Bloques 20)" } 
+            { id: "traducir", nombre: "Translate" },
+            { id: "emparejar", nombre: "Match" },
+            { id: "eleccion-multiple", nombre: "Multiple choice" },
+            { id: "contexto", nombre: "Context (Bloques 20)" } 
         ];
         actividades.forEach(act => {
             const btn = document.createElement("button");
@@ -260,10 +260,10 @@ if (btnVolverRanking) {
         if (tituloActividad) {
             tituloActividad.textContent = {
                 "flashcards": "Actividad: Flashcards",
-                "traducir": "Actividad: Traducir",
-                "emparejar": "Actividad: Emparejar",
-                "eleccion-multiple": "Actividad: Elección múltiple",
-                "contexto": "Actividad: Contexto"
+                "traducir": "Actividad: Translation",
+                "emparejar": "Actividad: Match",
+                "eleccion-multiple": "Actividad: Multiple choice",
+                "contexto": "Actividad: Context"
             }[idActividad] || "Actividad";
         }
         
