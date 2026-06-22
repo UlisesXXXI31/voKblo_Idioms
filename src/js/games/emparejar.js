@@ -30,12 +30,12 @@ let emparejarPalabras = [];
     // Asigna a la variable global/externa
     bloquePalabrasActual = emparejarPalabras.slice(inicio, fin); 
     
-    const alemanArr = bloquePalabrasActual.map(p => p.aleman);
+    const alemanArr = bloquePalabrasActual.map(p => p.ingles);
     const espanolArr = bloquePalabrasActual.map(p => p.espanol);
     const espanolMezclado = espanolArr.sort(() => Math.random() - 0.5);
     if (actividadJuego) {
         actividadJuego.innerHTML = `
-            <p>Empareja las palabras en alemán con su traducción en español:</p>
+            <p>Match the english idioms with their spanish translation:</p>
             <div id="palabras-aleman" class="contenedor-palabras"></div>
             <div id="palabras-espanol" class="contenedor-palabras"></div>
             <div id="mensaje-feedback" style="margin-top:1rem;"></div>
@@ -77,17 +77,17 @@ function seleccionarEmparejar(tipo, btn, valor) {
     btn.classList.add("seleccionada");
     emparejarSeleccionados.push({ tipo, btn, valor });
     if (emparejarSeleccionados.length === 2) {
-        let palabraAleman, palabraEspanol;
+        let palabraIngles, palabraEspanol;
         if (emparejarSeleccionados[0].tipo === "aleman") {
-            palabraAleman = emparejarSeleccionados[0].valor;
+            palabraIngles = emparejarSeleccionados[0].valor;
             palabraEspanol = emparejarSeleccionados[1].valor;
         } else {
-            palabraAleman = emparejarSeleccionados[1].valor;
+            palabraIngles = emparejarSeleccionados[1].valor;
             palabraEspanol = emparejarSeleccionados[0].valor;
         }
         
         // Usa la variable global/externa
-        const correcto = bloquePalabrasActual.some(p => p.aleman === palabraAleman && p.espanol === palabraEspanol);
+        const correcto = bloquePalabrasActual.some(p => p.ingles === palabraIngles && p.espanol === palabraEspanol);
         if (correcto) {
             puntos++;
 
@@ -109,7 +109,7 @@ function seleccionarEmparejar(tipo, btn, valor) {
             
             // --- ¡Añade esta línea para eliminar la pareja de bloquePalabrasActual! ---
             // Filtra las palabras, eliminando la pareja que acaba de ser acertada
-            bloquePalabrasActual = bloquePalabrasActual.filter(p => !(p.aleman === palabraAleman && p.espanol === palabraEspanol));
+            bloquePalabrasActual = bloquePalabrasActual.filter(p => !(p.ingles === palabraIngles && p.espanol === palabraEspanol));
             // -------------------------------------------------------------------
 
             if (bloquePalabrasActual.length === 0) { // <-- Ahora sí verificará el tamaño del bloque actual
