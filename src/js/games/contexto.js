@@ -47,8 +47,7 @@ if (btnIniciarExamen) {
 
 // 3. Función principal del juego (¡100% Clics Rápidos!)
 function mostrarPreguntaContexto() {
-    // Actualiza la barra automáticamente (ejemplo: 3 de 20)
-    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
+    
     const contenedorFrase = document.getElementById("frase-pregunta");
     const contenedorOpciones = document.getElementById("opciones-contexto");
     const progreso = document.getElementById("info-progreso");
@@ -68,7 +67,7 @@ function mostrarPreguntaContexto() {
         guardarPuntuacionEnHistorial(); 
         return;
     }
-
+    
     const item = palabrasBloque[indiceContexto];
     progreso.textContent = `Pregunta ${indiceContexto + 1} de ${palabrasBloque.length}`;
     

@@ -258,9 +258,12 @@ if (btnVolverRanking) {
     const barra = document.getElementById("barra-progreso-juego");
     if (!barra) return;
     
-    // Calculamos el porcentaje (por ejemplo: si va por la 0 de 20, es 0%. Al terminar la 20 de 20, 100%)
-    const porcentaje = totalElementos > 0 ? (indiceActual / totalElementos) * 100 : 0;
-    barra.style.width = `${porcentaje}%`;
+    // Sumamos 1 al índice para que en la primera pregunta (0) ya marque avance (1 / total)
+    // Cuando complete la última pregunta, llegará al 100% justo antes de mostrar la pantalla final
+    const preguntaActual = indiceActual + 1; 
+    const porcentaje = totalElementos > 0 ? (preguntaActual / totalElementos) * 100 : 0;
+    
+    barra.style.width = `${Math.min(porcentaje, 100)}%`;
 }
 
     // Iniciar actividad
