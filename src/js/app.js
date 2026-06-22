@@ -153,8 +153,6 @@ registerServiceWorker();
             { id: "traducir", nombre: "Traducir" },
             { id: "emparejar", nombre: "Emparejar" },
             { id: "eleccion-multiple", nombre: "Elección múltiple" },
-            { id: "escuchar", nombre: "Escuchar" },
-            { id: "pronunciacion", nombre: "Pronunciación" },
             { id: "contexto", nombre: "Test de Contexto (Bloques 20)" } 
         ];
         actividades.forEach(act => {
@@ -265,8 +263,6 @@ if (btnVolverRanking) {
                 "traducir": "Actividad: Traducir",
                 "emparejar": "Actividad: Emparejar",
                 "eleccion-multiple": "Actividad: Elección múltiple",
-                "escuchar": "Actividad: Escuchar",
-                "pronunciacion": "Actividad: Pronunciación",
                 "contexto": "Actividad: Contexto"
             }[idActividad] || "Actividad";
         }
@@ -282,10 +278,6 @@ if (btnVolverRanking) {
             iniciarEmparejar();
         } else if (idActividad === "eleccion-multiple") {
             iniciarEleccionMultiple();
-        } else if (idActividad === "escuchar") {
-            iniciarEscuchar();
-        } else if (idActividad === "pronunciacion") {
-            iniciarPronunciar(leccionActual);
         }else if (idActividad === "contexto") {
            iniciarContexto();
     }
