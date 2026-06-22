@@ -17,11 +17,12 @@ function iniciarEleccionMultiple() {
     mostrarPreguntaEleccion();
 }
 function mostrarPreguntaEleccion() {
-    const contenedor = document.getElementById("actividad-juego");
-    if (!contenedor) return;
+    const contenedorPrincipal = document.getElementById("actividad-juego");
+    if (!contenedorPrincipal) return;
     
+    // 1. Si la actividad terminó, mostramos el mensaje final
     if (eleccionIndice >= eleccionPalabras.length) {
-        contenedor.innerHTML = `
+        contenedorPrincipal.innerHTML = `
             <div style='text-align:center; padding: 20px;'>
                 <h3>Activity Completed! 👔</h3>
                 <p>You have mastered the register and nuances of these C2 idioms.</p>
@@ -29,20 +30,29 @@ function mostrarPreguntaEleccion() {
         guardarPuntuacionEnHistorial(); 
         return;
     }
+
+    // 2. 🎯 TRUCO: Aseguramos que la barra gris esté fija arriba en el contenedor principal
+    // Si no está la barra en pantalla, la pintamos una sola vez arriba del todo
+    if (!document.getElementById("barra-progreso-elemento")) {
+        contenedorPrincipal.innerHTML = `
+            <div style="background: #e0e0e0; width: 100%; height: 10px; border-radius: 5px; margin-bottom: 10px; overflow: hidden;">
+                <div id="barra-progreso-elemento" style="background: #00bcd4; width: 0%; height: 100%; transition: width 0.3s ease;"></div>
+            </div>
+            <div id="interfaz-dinamica-juego"></div>
+        `;
+    }
+
+    // 3. Apuntamos al contenedor interno para inyectar las preguntas sin romper la barra superior
+    const interfazJuego = document.getElementById("interfaz-dinamica-juego") || contenedorPrincipal;
     
     const palabra = eleccionPalabras[eleccionIndice];
     const opciones = ["formal", "informal", "idiomatic/neutral"];
     
-    // 💡 INYECTAMOS LA BARRA DE PROGRESO Y EL CONTADOR AQUÍ MISMO ANTES DEL IDIOM
-    contenedor.innerHTML = `
-        <div style="background: #e0e0e0; width: 100%; height: 10px; border-radius: 5px; margin-bottom: 10px; overflow: hidden;">
-            <div id="barra-progreso-elemento" style="background: #00bcd4; width: 0%; height: 100%; transition: width 0.3s ease;"></div>
-        </div>
-
+    // 4. Inyectamos el texto contador ("Pregunta X de 20") y el contenido del juego
+    interfazJuego.innerHTML = `
         <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 500;">
             Pregunta ${eleccionIndice + 1} de ${eleccionPalabras.length}
         </p>
-
         <p><strong>C2 Idiom:</strong> <span style="font-size: 1.2rem; color: #0070f3;">${palabra.ingles}</span></p>
         <p style="font-style: italic; color: #555; margin-bottom: 1.5rem;">
             <strong>Usage Note:</strong> ${palabra.contexto_uso || "Advanced descriptive context..."}
@@ -52,7 +62,7 @@ function mostrarPreguntaEleccion() {
         <div id="mensaje-feedback" style="margin-top:1rem; font-weight: bold; min-height: 20px;"></div>
     `;
     
-    // 📊 3. Forzar a la barra a rellenarse de color turquesa AHORA QUE YA EXISTE EN EL DOM
+    // 5. 🚀 Actualizamos la barra (ahora sí, compartida y a salvo)
     if (typeof window.actualizarBarraProgreso === 'function') {
         window.actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     } else if (typeof actualizarBarraProgreso === 'function') {
@@ -70,8 +80,6 @@ function mostrarPreguntaEleccion() {
         
         btn.addEventListener("click", () => {
             const respuestaCorrecta = (palabra.formalidad || "informal").toLowerCase().trim();
-            
-            // Bloqueamos temporalmente los botones para evitar clics dobles
             const botones = opcionesContainer.querySelectorAll("button");
             botones.forEach(b => b.disabled = true);
             
@@ -82,7 +90,6 @@ function mostrarPreguntaEleccion() {
                 }
                 if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
                 
-                // 🎉 Confeti
                 confetti({
                     particleCount: 100,
                     spread: 70,
@@ -105,7 +112,6 @@ function mostrarPreguntaEleccion() {
                 puntos = Math.max(0, puntos - 1);
                 actualizarPuntos();
                 
-                // Si falla, reactivamos botones para reintento en 1.5s
                 setTimeout(() => {
                     botones.forEach(b => b.disabled = false);
                     if (feedback) feedback.textContent = "";
