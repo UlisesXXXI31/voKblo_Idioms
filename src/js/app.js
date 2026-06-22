@@ -252,7 +252,16 @@ if (btnVolverRanking) {
 // ---------------------------------------------
 
   
+    // --- VARIABLES GLOBALES DE APOYO PARA PROGRESO ---
+   // Esta función dibuja o actualiza la barra en base al índice actual y el total de elementos
+    function actualizarBarraProgreso(indiceActual, totalElementos) {
+    const barra = document.getElementById("barra-progreso-juego");
+    if (!barra) return;
     
+    // Calculamos el porcentaje (por ejemplo: si va por la 0 de 20, es 0%. Al terminar la 20 de 20, 100%)
+    const porcentaje = totalElementos > 0 ? (indiceActual / totalElementos) * 100 : 0;
+    barra.style.width = `${porcentaje}%`;
+}
 
     // Iniciar actividad
     function iniciarActividad(idActividad) {
@@ -260,15 +269,29 @@ if (btnVolverRanking) {
         if (tituloActividad) {
             tituloActividad.textContent = {
                 "flashcards": "Actividad: Flashcards",
-                "traducir": "Actividad: Translation",
+                "traducir": "Actividad: Translate",
                 "emparejar": "Actividad: Match",
                 "eleccion-multiple": "Actividad: Multiple choice",
                 "contexto": "Actividad: Context"
             }[idActividad] || "Actividad";
         }
         
-        if (actividadJuego) actividadJuego.innerHTML = "";
-        
+        if (actividadJuego) {actividadJuego.innerHTML = `<!-- Contenedor exterior de la barra de progreso estilo Duolingo -->
+            <div id="wrapper-progreso" style="background-color: #e0e0e0; border-radius: 10px; width: 100%; height: 12px; margin: 10px 0 20px 0; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
+                <div id="barra-progreso-juego" style="background-color: #4caf50; width: 0%; height: 100%; transition: width 0.4s ease-in-out; border-radius: 10px;"></div>
+            </div>
+            <!-- Contenedor dinámico secundario donde se renderizará el juego en sí -->
+            <div id="contenido-sub-juego"></div>
+        `;
+        }
+
+        //Modificamos el contenedor objetivo para que los juegos no borren la barra de progreso
+    // cambiamos temporalmente la referencia o adaptando el flujo:
+    const contenedorOriginal = actividadJuego;
+    
+    // Forzamos a que el renderizado de los juegos caiga en nuestro nuevo sub-contenedor
+    const subContenedor = document.getElementById("contenido-sub-juego");
+    
         mostrarPantalla("pantalla-actividad");
            if (idActividad === "flashcards"){
                iniciarFlashcards();
