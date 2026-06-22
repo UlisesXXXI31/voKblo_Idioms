@@ -134,7 +134,7 @@ registerServiceWorker();
         tituloListaLeccion.textContent = `Palabras de la lección: ${leccion.nombre}`;
         listaPalabrasContainer.innerHTML = "";
         const tabla = document.createElement("table");
-        tabla.innerHTML = "<thead><tr><th>Alemán</th><th>Español</th></tr></thead><tbody></tbody>";
+        tabla.innerHTML = "<thead><tr><th>English</th><th>Español</th></tr></thead><tbody></tbody>";
         leccion.palabras.forEach(par => {
             const fila = document.createElement("tr");
             fila.innerHTML = `<td>${par.ingles}</td><td>${par.espanol}</td>`;
