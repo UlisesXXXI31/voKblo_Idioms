@@ -1,1 +1,1 @@
-const API_BASE_URL = 'https://vokblo-backend-idioms.vercel.app/';
+const API_BASE_URL = 'https://vokblo-backend-idioms.vercel.app';
