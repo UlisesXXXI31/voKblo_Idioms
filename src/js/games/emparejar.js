@@ -20,8 +20,7 @@ let emparejarPalabras = [];
 }
 
     function cargarBloqueEmparejar() {
-        // Actualiza la barra automáticamente (ejemplo: 3 de 20)
-    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
+        
     const actividadJuego = document.getElementById("actividad-juego");
 
     emparejarSeleccionados = [];
@@ -71,7 +70,8 @@ let emparejarPalabras = [];
 
        // ... después de cargarBloqueEmparejar o al mismo nivel de ámbito global
 function seleccionarEmparejar(tipo, btn, valor) {
-   
+    // Actualiza la barra automáticamente (ejemplo: 3 de 20)
+    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     const feedback = document.getElementById("mensaje-feedback"); // Mejor obtenerlo aquí cada vez si no es global
 
     if (emparejarSeleccionados.length === 2) return;

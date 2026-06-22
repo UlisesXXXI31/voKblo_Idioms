@@ -149,10 +149,10 @@ registerServiceWorker();
         if (!actividadesContainer) return;
         actividadesContainer.innerHTML = "";
         const actividades = [
-            { id: "flashcards", nombre: "Flash Cards" },
-            { id: "traducir", nombre: "Translate" },
-            { id: "emparejar", nombre: "Match" },
-            { id: "eleccion-multiple", nombre: "Multiple choice" },
+            { id: "flashcards", nombre: "Flashcards" },
+            { id: "traducir", nombre: "Sentence transformation" },
+            { id: "emparejar", nombre: "Match the idioms" },
+            { id: "eleccion-multiple", nombre: "register & Nuances" },
             { id: "contexto", nombre: "Context (Bloques 20)" } 
         ];
         actividades.forEach(act => {
@@ -291,7 +291,7 @@ if (btnVolverRanking) {
     
     // Forzamos a que el renderizado de los juegos caiga en nuestro nuevo sub-contenedor
     const subContenedor = document.getElementById("contenido-sub-juego");
-    
+
         mostrarPantalla("pantalla-actividad");
            if (idActividad === "flashcards"){
                iniciarFlashcards();
