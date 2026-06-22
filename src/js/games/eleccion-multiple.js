@@ -18,10 +18,16 @@ function iniciarEleccionMultiple() {
 }
 
 function mostrarPreguntaEleccion() {
-    // 📊 ACTUALIZACIÓN EN TIEMPO REAL: Se ejecuta en cada pregunta con los datos frescos
-    if (typeof actualizarBarraProgreso === 'function') {
+    // 📊 1. Forzar a la barra a actualizarse con las variables reales de este juego
+    // Cambia 'eleccionIndice' y 'eleccionPalabras' por cómo se llamen tus variables globales en este archivo
+    if (typeof window.actualizarBarraProgreso === 'function') {
+        window.actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
+    } else if (typeof actualizarBarraProgreso === 'function') {
         actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     }
+
+    const contenedor = document.getElementById("actividad-juego");
+    
     
     // Apuntamos al contenedor interno para NO destruir la barra de progreso superior
     const interfazJuego = document.getElementById("interfaz-opciones") || document.getElementById("actividad-juego");
