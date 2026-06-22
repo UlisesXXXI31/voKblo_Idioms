@@ -255,21 +255,28 @@ if (btnVolverRanking) {
     // --- VARIABLES GLOBALES DE APOYO PARA PROGRESO ---
    //✨ FUNCIÓN CORREGIDA Y GENÉRICA:
 function actualizarBarraProgreso(actual, total) {
-    // 1. Busca el elemento que se llena de color (asegúrate de que el ID sea el correcto)
-    const barra = document.getElementById("barra-progreso-elemento") || document.querySelector(".progress-bar-fill"); 
-    
-    if (!barra || !total || total === 0) return;
+    if (!total || total === 0) return;
 
-    // 2. Cálculo puro basado en los argumentos recibidos
+    // 🎯 Intenta agarrar la barra de 3 formas distintas para no fallar nunca
+    const barra = document.getElementById("barra-progreso-elemento") 
+               || document.querySelector(".progress-bar-fill")
+               || document.querySelector(".progress-bar"); // <-- Por si acaso
+
+    if (!barra) {
+        console.warn("⚠️ No se encontró ningún elemento de barra de progreso en el HTML actual.");
+        return;
+    }
+
     const porcentaje = (actual / total) * 100;
     
-    // 3. Aplicamos el ancho de forma segura
+    // 🚀 Aplicamos el ancho
     barra.style.width = `${porcentaje}%`;
-    console.log(`Progreso actualizado: ${actual} de ${total} (${porcentaje}%)`); // Para ver el cambio en la consola
+    
+    console.log(` Barra actualizada con éxito: ${actual}/${total} (${porcentaje}%)`);
 }
 
-// Aseguramos que sea global para que otros archivos la vean sin problemas
- window.actualizarBarraProgreso = actualizarBarraProgreso;
+// La hacemos global
+window.actualizarBarraProgreso = actualizarBarraProgreso;
 
     // Iniciar actividad
     function iniciarActividad(idActividad) {
