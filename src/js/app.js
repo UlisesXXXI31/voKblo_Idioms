@@ -253,18 +253,23 @@ if (btnVolverRanking) {
 
   
     // --- VARIABLES GLOBALES DE APOYO PARA PROGRESO ---
-   // Esta función dibuja o actualiza la barra en base al índice actual y el total de elementos
-    function actualizarBarraProgreso(indiceActual, totalElementos) {
-    const barra = document.getElementById("barra-progreso-juego");
-    if (!barra) return;
+   //✨ FUNCIÓN CORREGIDA Y GENÉRICA:
+function actualizarBarraProgreso(actual, total) {
+    // 1. Busca el elemento que se llena de color (asegúrate de que el ID sea el correcto)
+    const barra = document.getElementById("barra-progreso-elemento") || document.querySelector(".progress-bar-fill"); 
     
-    // Sumamos 1 al índice para que en la primera pregunta (0) ya marque avance (1 / total)
-    // Cuando complete la última pregunta, llegará al 100% justo antes de mostrar la pantalla final
-    const preguntaActual = indiceActual + 1; 
-    const porcentaje = totalElementos > 0 ? (preguntaActual / totalElementos) * 100 : 0;
+    if (!barra || !total || total === 0) return;
+
+    // 2. Cálculo puro basado en los argumentos recibidos
+    const porcentaje = (actual / total) * 100;
     
-    barra.style.width = `${Math.min(porcentaje, 100)}%`;
+    // 3. Aplicamos el ancho de forma segura
+    barra.style.width = `${porcentaje}%`;
+    console.log(`Progreso actualizado: ${actual} de ${total} (${porcentaje}%)`); // Para ver el cambio en la consola
 }
+
+// Aseguramos que sea global para que otros archivos la vean sin problemas
+ window.actualizarBarraProgreso = actualizarBarraProgreso;
 
     // Iniciar actividad
     function iniciarActividad(idActividad) {
