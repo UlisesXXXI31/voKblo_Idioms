@@ -47,6 +47,13 @@ if (btnIniciarExamen) {
 
 // 3. Función principal del juego (¡100% Clics Rápidos!)
 function mostrarPreguntaContexto() {
+    // 📊 ACTUALIZACIÓN SEGURA DE LA BARRA DE PROGRESO
+    // Al usar 'window.actualizarBarraProgreso' prevenimos errores de "not defined" si app.js tarda en cargar
+    if (typeof window.actualizarBarraProgreso === 'function') {
+        window.actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
+    } else if (typeof actualizarBarraProgreso === 'function') {
+        actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
+    }
     
     const contenedorFrase = document.getElementById("frase-pregunta");
     const contenedorOpciones = document.getElementById("opciones-contexto");
@@ -75,7 +82,6 @@ function mostrarPreguntaContexto() {
     contenedorFrase.textContent = item.frase || "Missing context sentence...";
 
     // Generar opciones: La respuesta conjugada correcta + 3 distractores
-    // Usamos 'respuesta_cloze' si existe (por si cambia el tiempo verbal), si no, 'ingles'
     let solucionCorrecta = item.respuesta_cloze || item.ingles;
     
     let opciones = [solucionCorrecta];
@@ -96,15 +102,24 @@ function mostrarPreguntaContexto() {
         btn.textContent = opt;
         btn.className = "actividad-btn";
         btn.onclick = () => {
+            // Bloqueamos clics repetidos en los botones mientras se muestra el feedback
+            const botones = contenedorOpciones.querySelectorAll("button");
+            botones.forEach(b => b.disabled = true);
+
             if (opt === solucionCorrecta) {
                 feedback.textContent = "Spot on! 🌟";
                 feedback.style.color = "green";
                 if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
-                confetti({
-                         particleCount: 100,
-                         spread: 70,
-                         origin: { y: 0.6 }
-                        });
+                
+                // 🎉 Explosión de Confeti al acertar
+                if (typeof confetti === 'function') {
+                    confetti({
+                        particleCount: 100,
+                        spread: 70,
+                        origin: { y: 0.6 }
+                    });
+                }
+                
                 puntos += 2;
                 actualizarRacha();
                 actualizarPuntos();
@@ -114,6 +129,11 @@ function mostrarPreguntaContexto() {
                 feedback.textContent = `Not quite! ❌ Correct: ${solucionCorrecta}`;
                 feedback.style.color = "red";
                 if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
+                
+                // Si falla, reactivamos botones para que pueda corregir tras un breve lapso
+                setTimeout(() => {
+                    botones.forEach(b => b.disabled = false);
+                }, 1500);
             }
         };
         contenedorOpciones.appendChild(btn);

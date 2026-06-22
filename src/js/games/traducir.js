@@ -1,4 +1,4 @@
- // --- VARIABLES GLOBALES PARA TRADUCIR (SENTENCE TRANSFORMATION C2) ---
+// --- VARIABLES GLOBALES PARA TRADUCIR (SENTENCE TRANSFORMATION C2) ---
 let traducirPalabras = [];
 let traducirIndice = 0;
 let palabrasSeleccionadasUser = []; // Guarda las palabras que el usuario va pinchando
@@ -21,8 +21,13 @@ function iniciarTraducir() {
 }
 
 function mostrarPalabraTraducir() {
-    // Actualiza la barra automáticamente (ejemplo: 3 de 20)
-    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
+    // 📊 ACTUALIZACIÓN SEGURA Y GLOBAL DE LA BARRA DE PROGRESO (C2 FIXED)
+    if (typeof window.actualizarBarraProgreso === 'function') {
+        window.actualizarBarraProgreso(traducirIndice, traducirPalabras.length);
+    } else if (typeof actualizarBarraProgreso === 'function') {
+        actualizarBarraProgreso(traducirIndice, traducirPalabras.length);
+    }
+
     const contenedor = document.getElementById("actividad-juego");
     if (!contenedor) return;
 
@@ -69,12 +74,10 @@ function mostrarPalabraTraducir() {
                 "${palabra.frase_transformada || "We need to ____ and accept the consequences."}"
             </h4>
             
-            <!-- Zona donde se van colocando las palabras seleccionadas -->
             <div id="zona-resultado" style="min-height: 45px; background: #fff; border: 2px dashed #ccc; border-radius: 8px; padding: 8px; margin-bottom: 15px; display: flex; flex-wrap: wrap; gap: 5px; align-items: center;">
                 <span style="color: #aaa; font-size: 0.9rem;" id="placeholder-zona">Click the blocks below to build the idiom...</span>
             </div>
             
-            <!-- Zona de bloques desordenados -->
             <div id="zona-bloques" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 20px;"></div>
             
             <div id="mensaje-feedback" style="font-weight: bold; min-height: 25px; margin-bottom: 10px;"></div>
@@ -159,11 +162,14 @@ function verificarTraducir(solucionCorrecta) {
         feedback.textContent = "Flawless Upgrade! 🌟 Native accuracy.";
         feedback.style.color = "green";
         if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
-        confetti({
-                         particleCount: 100,
-                         spread: 70,
-                         origin: { y: 0.6 }
-                        });
+        
+        if (typeof confetti === 'function') {
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+        }
         
         puntos += 3; // ¡Premio extra por ser el ejercicio rey!
         actualizarRacha(); 
