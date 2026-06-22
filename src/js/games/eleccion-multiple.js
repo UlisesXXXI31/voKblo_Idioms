@@ -2,44 +2,54 @@
 let eleccionIndice = 0;
 
 function iniciarEleccionMultiple() {
-    // Actualiza la barra automáticamente (ejemplo: 3 de 20)
-    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     eleccionPalabras = obtenerPalabrasSeleccionadas();
     eleccionPalabras.sort(() => Math.random() - 0.5);
     eleccionIndice = 0;
+    
+    // Dejamos el contenedor listo con espacio para el sub-juego sin tocar la barra externa
+    const actividadJuego = document.getElementById("actividad-juego");
+    if (actividadJuego && !document.getElementById("interfaz-opciones")) {
+        const subContenedor = document.createElement("div");
+        subContenedor.id = "interfaz-opciones";
+        actividadJuego.appendChild(subContenedor);
+    }
+
     mostrarPreguntaEleccion();
 }
 
 function mostrarPreguntaEleccion() {
+    // 📊 ACTUALIZACIÓN EN TIEMPO REAL: Se ejecuta en cada pregunta con los datos frescos
+    if (typeof actualizarBarraProgreso === 'function') {
+        actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
+    }
     
-    const actividadJuego = document.getElementById("actividad-juego");
+    // Apuntamos al contenedor interno para NO destruir la barra de progreso superior
+    const interfazJuego = document.getElementById("interfaz-opciones") || document.getElementById("actividad-juego");
     
     if (eleccionIndice >= eleccionPalabras.length) {
-        if (actividadJuego) {
-            actividadJuego.innerHTML = `
-                <div style='text-align:center;'>
+        if (interfazJuego) {
+            interfazJuego.innerHTML = `
+                <div style='text-align:center; padding: 20px;'>
                     <h3>Activity Completed! 👔</h3>
                     <p>You have mastered the register and nuances of these C2 idioms.</p>
                 </div>`;
         }
-        guardarPuntuacionEnHistorial(); // Guarda los puntos al finalizar
+        guardarPuntuacionEnHistorial(); 
         return;
     }
     
     const palabra = eleccionPalabras[eleccionIndice];
-    
-    // C2 Fix: Forzamos opciones fijas según el diseño de formalidad de tu base de datos
     const opciones = ["formal", "informal", "idiomatic/neutral"];
     
-    if (actividadJuego) {
-        actividadJuego.innerHTML = `
+    if (interfazJuego) {
+        interfazJuego.innerHTML = `
             <p><strong>C2 Idiom:</strong> <span style="font-size: 1.2rem; color: #0070f3;">${palabra.ingles}</span></p>
             <p style="font-style: italic; color: #555; margin-bottom: 1.5rem;">
                 <strong>Usage Note:</strong> ${palabra.contexto_uso || "Advanced descriptive context..."}
             </p>
             <p><em>Select the correct register:</em></p>
             <div id="opciones-multiple"></div>
-            <div id="mensaje-feedback" style="margin-top:1rem; font-weight: bold;"></div>
+            <div id="mensaje-feedback" style="margin-top:1rem; font-weight: bold; min-height: 20px;"></div>
         `;
     }
     
@@ -48,14 +58,16 @@ function mostrarPreguntaEleccion() {
     
     opciones.forEach(opcion => {
         const btn = document.createElement("button");
-        // Capitalizamos el texto para que estéticamente se vea mejor en el botón
         btn.textContent = opcion.charAt(0).toUpperCase() + opcion.slice(1);
         btn.className = "btn-opcion";
         btn.style.margin = "0.3rem";
         
         btn.addEventListener("click", () => {
-            // Validamos contra la propiedad .formalidad de tu base de datos
             const respuestaCorrecta = (palabra.formalidad || "informal").toLowerCase().trim();
+            
+            // Bloqueamos temporalmente los botones para evitar clics dobles fantasmas
+            const botones = opcionesContainer.querySelectorAll("button");
+            botones.forEach(b => b.disabled = true);
             
             if (opcion === respuestaCorrecta) {
                 if (feedback) {
@@ -63,11 +75,14 @@ function mostrarPreguntaEleccion() {
                     feedback.style.color = "green";
                 }
                 if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
+                
+                // 🎉 Confeti al 100%
                 confetti({
-                         particleCount: 100,
-                         spread: 70,
-                         origin: { y: 0.6 }
-                        });
+                    particleCount: 100,
+                    spread: 70,
+                    origin: { y: 0.6 }
+                });
+                
                 puntos++;
                 actualizarRacha(); 
                 actualizarPuntos();
@@ -80,8 +95,15 @@ function mostrarPreguntaEleccion() {
                     feedback.style.color = "red";
                 }
                 if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
+                
                 puntos = Math.max(0, puntos - 1);
                 actualizarPuntos();
+                
+                // Si falla, le dejamos reintentar la pregunta reactivando los botones en 1.5s
+                setTimeout(() => {
+                    botones.forEach(b => b.disabled = false);
+                    if (feedback) feedback.textContent = "";
+                }, 1500);
             }
         });
         if (opcionesContainer) opcionesContainer.appendChild(btn);
