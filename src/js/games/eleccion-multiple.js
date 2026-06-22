@@ -2,6 +2,8 @@
 let eleccionIndice = 0;
 
 function iniciarEleccionMultiple() {
+    // Actualiza la barra automáticamente (ejemplo: 3 de 20)
+    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     eleccionPalabras = obtenerPalabrasSeleccionadas();
     eleccionPalabras.sort(() => Math.random() - 0.5);
     eleccionIndice = 0;
@@ -9,8 +11,7 @@ function iniciarEleccionMultiple() {
 }
 
 function mostrarPreguntaEleccion() {
-    // Actualiza la barra automáticamente (ejemplo: 3 de 20)
-    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
+    
     const actividadJuego = document.getElementById("actividad-juego");
     
     if (eleccionIndice >= eleccionPalabras.length) {
