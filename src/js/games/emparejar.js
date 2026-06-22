@@ -20,6 +20,8 @@ let emparejarPalabras = [];
 }
 
     function cargarBloqueEmparejar() {
+        // Actualiza la barra automáticamente (ejemplo: 3 de 20)
+    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     const actividadJuego = document.getElementById("actividad-juego");
 
     emparejarSeleccionados = [];

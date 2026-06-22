@@ -9,6 +9,8 @@ function iniciarEleccionMultiple() {
 }
 
 function mostrarPreguntaEleccion() {
+    // Actualiza la barra automáticamente (ejemplo: 3 de 20)
+    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     const actividadJuego = document.getElementById("actividad-juego");
     
     if (eleccionIndice >= eleccionPalabras.length) {

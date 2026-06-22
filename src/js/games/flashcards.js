@@ -2,6 +2,8 @@ let listaFlashcards = [];
 let indiceFlash = 0;
 
 function iniciarFlashcards() {
+    // Actualiza la barra automáticamente (ejemplo: 3 de 20)
+    actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     listaFlashcards = obtenerPalabrasSeleccionadas(); // Tu función de bloques de 20
 
     if (!listaFlashcards || listaFlashcards.length === 0) {
