@@ -1,5 +1,22 @@
 let palabrasBloque = [];
 let indiceContexto = 0;
+
+// 🍌 Para el feedback pregunta a pregunta
+const minionsFelices = [
+    "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif",
+    "https://media.giphy.com/media/kiBcwEXeg7bindAhIY/giphy.gif"
+];
+
+const minionsTristes = [
+    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y5dzZidm03Y3J6N3N0Znd6cmg0NjF6bWh0Mml0ZmdmZXN4OHg0ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9Y5BbDSkSTiY8/giphy.gif",
+    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbms1Nmw0MDZ5Ym9pY3R0NzB6ZTh5cHZ6NTN6Y3p5Z3Z0MXA0Y3ZsNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Y3bme767LJMK4/giphy.gif"
+];
+
+// 🏆 Para la gran pantalla final al terminar las 20 preguntas
+const gifsCopasVictoria = [
+    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnZ1b2E4M3M2M20zbXp3b3ZpZzZ0Z3kyeDNuM290M3h6ZHJvMnVpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7aBOFPRw8E/giphy.gif", // Copa dorada con confeti
+    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXN6MTh4N255MXhyeXg5NHRlbDRicWp4M3Ewdm01NWhicmZ5cjRxdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26u4cwb3dV1cBm9Ta/giphy.gif"  // Trofeo brillante de campeón
+];
     
 // 1. Función para iniciar la configuración
 function iniciarContexto() {
@@ -68,7 +85,19 @@ function mostrarPreguntaContexto() {
     feedback.textContent = "";
 
     if (indiceContexto >= palabrasBloque.length) {
-        contenedorFrase.innerHTML = "<div style='text-align:center;'><h3>¡Cloze Test Finalizado! 🧠</h3><p>¡Buen trabajo controlando esos contextos C2!</p></div>";
+        const copaAleatoria = gifsCopasVictoria[Math.floor(Math.random() * gifsCopasVictoria.length)];
+
+        contenedorFrase.innerHTML = `
+        <div style='text-align:center; padding: 20px;'>
+            <h3 style="color: #ffb300; font-size: 1.8rem; margin-bottom: 10px; font-weight: bold;">Activity Completed! 🏆</h3>
+            <p style="font-size: 1.1rem; color: #555; margin-bottom: 20px;">You have mastered the register and nuances of these C2 idioms.</p>
+            
+            <div style="margin: 20px auto; max-width: 260px;">
+                <img src="${copaAleatoria}" 
+                     alt="Victory Trophy" 
+                     style="width: 100%; border-radius: 12px; box-shadow: 0 6px 20px rgba(255, 179, 0, 0.3);">
+            </div>
+        </div>`;
         contenedorOpciones.innerHTML = "";
         progreso.textContent = "";
         guardarPuntuacionEnHistorial(); 
@@ -107,8 +136,15 @@ function mostrarPreguntaContexto() {
             botones.forEach(b => b.disabled = true);
 
             if (opt === solucionCorrecta) {
-                feedback.textContent = "Spot on! 🌟";
-                feedback.style.color = "green";
+                if (feedback) {
+                const gifOk = minionsFelices[Math.floor(Math.random() * minionsFelices.length)];
+        feedback.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
+                <span style="color: green;">Spot on! Match correct. 🌟</span>
+                <img src="${gifOk}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
+            </div>
+               `;
+                }
                 if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
                 
                 // 🎉 Explosión de Confeti al acertar
@@ -126,8 +162,15 @@ function mostrarPreguntaContexto() {
                 indiceContexto++;
                 setTimeout(mostrarPreguntaContexto, 1200); // Transición rápida
             } else {
-                feedback.textContent = `Not quite! ❌ Correct: ${solucionCorrecta}`;
-                feedback.style.color = "red";
+                if (feedback) {
+        const gifKo = minionsTristes[Math.floor(Math.random() * minionsTristes.length)];
+        feedback.innerHTML = `
+            <div style="text-align: center; margin-top: 10px;">
+                <p style="color: red; margin-bottom: 8px;">Not quite. This idiom is typically considered: <strong>${respuestaCorrecta}</strong></p>
+                <img src="${gifKo}" style="width: 90px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            </div>
+             `;
+               }
                 if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
                 
                 // Si falla, reactivamos botones para que pueda corregir tras un breve lapso

@@ -3,6 +3,23 @@ let traducirPalabras = [];
 let traducirIndice = 0;
 let palabrasSeleccionadasUser = []; // Guarda las palabras que el usuario va pinchando
 
+// 🍌 Para el feedback pregunta a pregunta
+const minionsFelices = [
+    "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif",
+    "https://media.giphy.com/media/kiBcwEXeg7bindAhIY/giphy.gif"
+];
+
+const minionsTristes = [
+    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y5dzZidm03Y3J6N3N0Znd6cmg0NjF6bWh0Mml0ZmdmZXN4OHg0ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9Y5BbDSkSTiY8/giphy.gif",
+    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbms1Nmw0MDZ5Ym9pY3R0NzB6ZTh5cHZ6NTN6Y3p5Z3Z0MXA0Y3ZsNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Y3bme767LJMK4/giphy.gif"
+];
+
+// 🏆 Para la gran pantalla final al terminar las 20 preguntas
+const gifsCopasVictoria = [
+    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnZ1b2E4M3M2M20zbXp3b3ZpZzZ0Z3kyeDNuM290M3h6ZHJvMnVpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7aBOFPRw8E/giphy.gif", // Copa dorada con confeti
+    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXN6MTh4N255MXhyeXg5NHRlbDRicWp4M3Ewdm01NWhicmZ5cjRxdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26u4cwb3dV1cBm9Ta/giphy.gif"  // Trofeo brillante de campeón
+];
+
 function iniciarTraducir() {
     console.log("Iniciando actividad Sentence Transformation C2...");
     
@@ -32,13 +49,19 @@ function mostrarPalabraTraducir() {
     if (!contenedor) return;
 
     if (traducirIndice >= traducirPalabras.length) {
-        contenedor.innerHTML = `
-            <div style="text-align:center; padding: 20px; border: 2px solid #4caf50; border-radius: 10px;">
-                <h2 style="color: #4caf50;">Activity Completed! 🏆</h2>
-                <p>You successfully transformed ${traducirPalabras.length} sentences like a native C2 speaker.</p>
-                <button onclick="mostrarPantalla('pantalla-actividades')" class="btn-volver">Volver</button>
+        const copaAleatoria = gifsCopasVictoria[Math.floor(Math.random() * gifsCopasVictoria.length)];
+
+        contenedorPrincipal.innerHTML = `
+        <div style='text-align:center; padding: 20px;'>
+            <h3 style="color: #ffb300; font-size: 1.8rem; margin-bottom: 10px; font-weight: bold;">Activity Completed! 🏆</h3>
+            <p style="font-size: 1.1rem; color: #555; margin-bottom: 20px;">You have mastered the register and nuances of these C2 idioms.</p>
+            
+            <div style="margin: 20px auto; max-width: 260px;">
+                <img src="${copaAleatoria}" 
+                     alt="Victory Trophy" 
+                     style="width: 100%; border-radius: 12px; box-shadow: 0 6px 20px rgba(255, 179, 0, 0.3);">
             </div>
-        `;
+        </div>`;
         guardarPuntuacionEnHistorial(); 
         return;
     }
@@ -159,8 +182,15 @@ function verificarTraducir(solucionCorrecta) {
     btnVerificar.disabled = true;
 
     if (respuestaUser === solucionCorrecta) {
-        feedback.textContent = "Flawless Upgrade! 🌟 Native accuracy.";
-        feedback.style.color = "green";
+        if (feedback) {
+        const gifOk = minionsFelices[Math.floor(Math.random() * minionsFelices.length)];
+        feedback.innerHTML = `
+            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
+                <span style="color: green;">Spot on! Match correct. 🌟</span>
+                <img src="${gifOk}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
+            </div>
+        `;
+    }
         if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
         
         if (typeof confetti === 'function') {
@@ -178,8 +208,15 @@ function verificarTraducir(solucionCorrecta) {
         traducirIndice++;
         setTimeout(mostrarPalabraTraducir, 1500);
     } else {
-        feedback.textContent = `Incorrect order. Master tip: "${solucionCorrecta}"`;
-        feedback.style.color = "red";
+        if (feedback) {
+        const gifKo = minionsTristes[Math.floor(Math.random() * minionsTristes.length)];
+        feedback.innerHTML = `
+            <div style="text-align: center; margin-top: 10px;">
+                <p style="color: red; margin-bottom: 8px;">Not quite. This idiom is typically considered: <strong>${respuestaCorrecta}</strong></p>
+                <img src="${gifKo}" style="width: 90px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            </div>
+        `;
+    }
         if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
         
         puntos = Math.max(0, puntos - 1);
