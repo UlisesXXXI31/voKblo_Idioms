@@ -201,7 +201,7 @@ function verificarTraducir(solucionCorrecta) {
             <img src="${gifKo}" style="width: 90px; border-radius: 8px;">
         </div>
     `;
-        `;
+        
     }
         if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
         
