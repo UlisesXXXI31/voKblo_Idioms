@@ -3,22 +3,7 @@ let traducirPalabras = [];
 let traducirIndice = 0;
 let palabrasSeleccionadasUser = []; // Guarda las palabras que el usuario va pinchando
 
-// 🍌 Para el feedback pregunta a pregunta
-const minionsFelices = [
-    "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif",
-    "https://media.giphy.com/media/kiBcwEXeg7bindAhIY/giphy.gif"
-];
 
-const minionsTristes = [
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y5dzZidm03Y3J6N3N0Znd6cmg0NjF6bWh0Mml0ZmdmZXN4OHg0ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9Y5BbDSkSTiY8/giphy.gif",
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbms1Nmw0MDZ5Ym9pY3R0NzB6ZTh5cHZ6NTN6Y3p5Z3Z0MXA0Y3ZsNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Y3bme767LJMK4/giphy.gif"
-];
-
-// 🏆 Para la gran pantalla final al terminar las 20 preguntas
-const gifsCopasVictoria = [
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExYnZ1b2E4M3M2M20zbXp3b3ZpZzZ0Z3kyeDNuM290M3h6ZHJvMnVpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o7qE1YN7aBOFPRw8E/giphy.gif", // Copa dorada con confeti
-    "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbXN6MTh4N255MXhyeXg5NHRlbDRicWp4M3Ewdm01NWhicmZ5cjRxdiZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/26u4cwb3dV1cBm9Ta/giphy.gif"  // Trofeo brillante de campeón
-];
 
 function iniciarTraducir() {
     console.log("Iniciando actividad Sentence Transformation C2...");
