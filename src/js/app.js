@@ -257,25 +257,44 @@ if (btnVolverRanking) {
 function actualizarBarraProgreso(actual, total) {
     if (!total || total === 0) return;
 
-    // 🎯 Intenta agarrar la barra de 3 formas distintas para no fallar nunca
-    const barra = document.getElementById("barra-progreso-elemento") 
-               || document.querySelector(".progress-bar-fill")
-               || document.querySelector(".progress-bar"); // <-- Por si acaso
+    const contenedor = document.getElementById("actividad-juego");
+    if (!contenedor) return;
 
+    // 🎯 1. Si la barra no existe en esta actividad, la fabricamos e inyectamos arriba del todo
+    let barra = document.getElementById("barra-progreso-elemento");
+    
     if (!barra) {
-        console.warn("⚠️ No se encontró ningún elemento de barra de progreso en el HTML actual.");
-        return;
+        // Creamos el contenedor gris de la barra
+        const contenedorBarra = document.createElement("div");
+        contenedorBarra.style.background = "#e0e0e0";
+        contenedorBarra.style.width = "100%";
+        contenedorBarra.style.height = "10px";
+        contenedorBarra.style.borderRadius = "5px";
+        contenedorBarra.style.marginBottom = "15px";
+        contenedorBarra.style.overflow = "hidden";
+
+        // Creamos la barra interna de color turquesa
+        barra = document.createElement("div");
+        barra.id = "barra-progreso-elemento";
+        barra.style.background = "#00bcd4";
+        barra.style.width = "0%";
+        barra.style.height = "100%";
+        barra.style.transition = "width 0.3s ease";
+
+        contenedorBarra.appendChild(barra);
+        
+        // La insertamos al principio del contenedor del juego activo, encima de todo
+        contenedor.insertBefore(contenedorBarra, contenedor.firstChild);
     }
 
+    // 🎯 2. Calculamos y aplicamos el porcentaje matemáticamente
     const porcentaje = (actual / total) * 100;
-    
-    // 🚀 Aplicamos el ancho
     barra.style.width = `${porcentaje}%`;
     
-    console.log(` Barra actualizada con éxito: ${actual}/${total} (${porcentaje}%)`);
+    console.log(`[Barra] Sincronizada en actividad actual: ${actual}/${total} (${porcentaje}%)`);
 }
 
-// La hacemos global
+// Aseguramos su alcance global
 window.actualizarBarraProgreso = actualizarBarraProgreso;
 
     // Iniciar actividad
