@@ -27,18 +27,16 @@ function mostrarPreguntaEleccion() {
                 <h3>Activity Completed! 👔</h3>
                 <p>You have mastered the register and nuances of these C2 idioms.</p>
             </div>`;
-        actualizarBarraProgreso(0, 0);
+        if (typeof actualizarBarraProgreso === 'function') actualizarBarraProgreso(0, 0);
         guardarPuntuacionEnHistorial(); 
         return;
     }
 
-    
-    
     const palabra = eleccionPalabras[eleccionIndice];
     const opciones = ["formal", "informal", "idiomatic/neutral"];
     
-    // 4. Inyectamos el texto contador ("Pregunta X de 20") y el contenido del juego
-    interfazJuego.innerHTML = `
+    // 🎯 CORRECCIÓN: Usamos 'contenedorPrincipal' en lugar de la variable inexistente 'interfazJuego'
+    contenedorPrincipal.innerHTML = `
         <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 500;">
             Pregunta ${eleccionIndice + 1} de ${eleccionPalabras.length}
         </p>
