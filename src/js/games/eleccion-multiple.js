@@ -24,7 +24,7 @@ function mostrarPreguntaEleccion() {
     // 1. Si la actividad terminó, mostramos el mensaje final
     if (eleccionIndice >= eleccionPalabras.length) {
 
-        const gifAleatorio = gifsMinions[Math.floor(Math.random() * gifsMinions.length)];
+        const copaAleatoria = gifsCopasVictoria[Math.floor(Math.random() * gifsCopasVictoria.length)];
 
         contenedorPrincipal.innerHTML = `
             <div style='text-align:center; padding: 20px;'>
@@ -82,7 +82,7 @@ function mostrarPreguntaEleccion() {
             
             if (opcion === respuestaCorrecta) {
                 if (feedback) {
-                    const gifOk = minionsFelices[Math.floor(Math.random() * minionsFelices.length)];
+                    const gifOk = window.minionsFelices[Math.floor(Math.random() * window.minionsFelices.length)];
         feedback.innerHTML = `
             <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
                 <span style="color: green;">Spot on! Match correct. 🌟</span>
@@ -106,7 +106,7 @@ function mostrarPreguntaEleccion() {
                 setTimeout(mostrarPreguntaEleccion, 1200);
             } else {
                 if (feedback) {
-                    const gifKo = minionsTristes[Math.floor(Math.random() * minionsTristes.length)];
+                    const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
         feedback.innerHTML = `
             <div style="text-align: center; margin-top: 10px;">
                 <p style="color: red; margin-bottom: 8px;">Not quite. This idiom is typically considered: <strong>${respuestaCorrecta}</strong></p>
