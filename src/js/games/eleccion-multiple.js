@@ -27,23 +27,12 @@ function mostrarPreguntaEleccion() {
                 <h3>Activity Completed! 👔</h3>
                 <p>You have mastered the register and nuances of these C2 idioms.</p>
             </div>`;
+        actualizarBarraProgreso(0, 0);
         guardarPuntuacionEnHistorial(); 
         return;
     }
 
-    // 2. 🎯 TRUCO: Aseguramos que la barra gris esté fija arriba en el contenedor principal
-    // Si no está la barra en pantalla, la pintamos una sola vez arriba del todo
-    if (!document.getElementById("barra-progreso-elemento")) {
-        contenedorPrincipal.innerHTML = `
-            <div style="background: #e0e0e0; width: 100%; height: 10px; border-radius: 5px; margin-bottom: 10px; overflow: hidden;">
-                <div id="barra-progreso-elemento" style="background: #00bcd4; width: 0%; height: 100%; transition: width 0.3s ease;"></div>
-            </div>
-            <div id="interfaz-dinamica-juego"></div>
-        `;
-    }
-
-    // 3. Apuntamos al contenedor interno para inyectar las preguntas sin romper la barra superior
-    const interfazJuego = document.getElementById("interfaz-dinamica-juego") || contenedorPrincipal;
+    
     
     const palabra = eleccionPalabras[eleccionIndice];
     const opciones = ["formal", "informal", "idiomatic/neutral"];
