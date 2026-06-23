@@ -260,41 +260,47 @@ function actualizarBarraProgreso(actual, total) {
     const contenedor = document.getElementById("actividad-juego");
     if (!contenedor) return;
 
-    // 🎯 1. Si la barra no existe en esta actividad, la fabricamos e inyectamos arriba del todo
     let barra = document.getElementById("barra-progreso-elemento");
     
     if (!barra) {
-        // Creamos el contenedor gris de la barra
+        // 1. Contenedor gris de fondo (Aseguramos bloques y márgenes visibles)
         const contenedorBarra = document.createElement("div");
+        contenedorBarra.id = "barra-progreso-contenedor-raiz";
+        contenedorBarra.style.display = "block";
         contenedorBarra.style.background = "#e0e0e0";
         contenedorBarra.style.width = "100%";
-        contenedorBarra.style.height = "10px";
-        contenedorBarra.style.borderRadius = "5px";
-        contenedorBarra.style.marginBottom = "15px";
+        contenedorBarra.style.height = "12px"; // Subimos a 12px para que tenga más cuerpo visual
+        contenedorBarra.style.borderRadius = "6px";
+        contenedorBarra.style.marginBottom = "20px";
         contenedorBarra.style.overflow = "hidden";
+        contenedorBarra.style.position = "relative"; // Posicionamiento seguro
 
-        // Creamos la barra interna de color turquesa
+        // 2. Barra interna turquesa (Forzamos altura y visualización)
         barra = document.createElement("div");
         barra.id = "barra-progreso-elemento";
+        barra.style.display = "block";
         barra.style.background = "#00bcd4";
+        barra.style.height = "100%"; // Ocupa el 100% de los 12px del padre
         barra.style.width = "0%";
-        barra.style.height = "100%";
-        barra.style.transition = "width 0.3s ease";
+        barra.style.borderRadius = "6px";
+        barra.style.transition = "width 0.4s ease-out"; // Animación más fluida
 
         contenedorBarra.appendChild(barra);
         
-        // La insertamos al principio del contenedor del juego activo, encima de todo
+        // Lo insertamos justo arriba del todo en la caja del juego
         contenedor.insertBefore(contenedorBarra, contenedor.firstChild);
     }
 
-    // 🎯 2. Calculamos y aplicamos el porcentaje matemáticamente
+    // 3. Calculamos el porcentaje
     const porcentaje = (actual / total) * 100;
-    barra.style.width = `${porcentaje}%`;
+    
+    // Parche estético: si es la pregunta 1 (0%), le damos un mini 2% para que se intuya el color al empezar
+    const anchoVisual = porcentaje === 0 ? 2 : porcentaje;
+    barra.style.width = `${anchoVisual}%`;
     
     console.log(`[Barra] Sincronizada en actividad actual: ${actual}/${total} (${porcentaje}%)`);
 }
 
-// Aseguramos su alcance global
 window.actualizarBarraProgreso = actualizarBarraProgreso;
 
     // Iniciar actividad
