@@ -155,19 +155,24 @@ function mostrarPalabraTraducir() {
     renderizarBloquesDisponibles();
 }
 
-function verificarTraducir(solucionCorrecta) {
+function verificarTraducir() {
+    const inputElement = document.getElementById("input-traduccion");
     const feedback = document.getElementById("mensaje-feedback");
-    const btnVerificar = document.getElementById("btn-verificar-traduccion");
+    
+    if (!inputElement || !feedback) return;
+    
+    const palabra = traducirPalabras[traducirIndice];
+    const textoUsuario = inputElement.value.trim().toLowerCase();
+    
+    // Asumimos que la respuesta correcta está en palabra.ingles (o cámbialo por tu propiedad real)
+    const solucionCorrecta = palabra.ingles.trim().toLowerCase();
+    
+    // Deshabilitamos el botón de verificar temporalmente
+    const btnVerificar = document.getElementById("btn-verificar-traducir");
+    if (btnVerificar) btnVerificar.disabled = true;
 
-    if (!feedback || !btnVerificar) return;
-
-    // Unimos la combinación armada por el alumno usando espacios libres
-    const respuestaUser = palabrasSeleccionadasUser.join(" ").trim().toLowerCase();
-
-    btnVerificar.disabled = true;
-
-    if (respuestaUser === solucionCorrecta) {
-        if (feedback) {
+    if (textoUsuario === solucionCorrecta) {
+        // 🍏 CASO: ACIERTO
         const gifOk = window.minionsFelices[Math.floor(Math.random() * window.minionsFelices.length)];
         feedback.innerHTML = `
             <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
@@ -175,43 +180,37 @@ function verificarTraducir(solucionCorrecta) {
                 <img src="${gifOk}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
             </div>
         `;
-    }
         if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
         
         if (typeof confetti === 'function') {
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
+            confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } });
         }
         
-        puntos += 3; // ¡Premio extra por ser el ejercicio rey!
-        actualizarRacha(); 
-        actualizarPuntos();
-        
+        puntos++;
+        if (typeof actualizarRacha === 'function') actualizarRacha(); 
+        if (typeof actualizarPuntos === 'function') actualizarPuntos();
+        localStorage.setItem('puntosTotales', puntos.toString());
         traducirIndice++;
-        setTimeout(mostrarPalabraTraducir, 1500);
+        
+        setTimeout(mostrarPreguntaTraducir, 1200);
+        
     } else {
-        if (feedback) {
+        // 🍎 CASO: FALLO (Minion Triste)
         const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
         feedback.innerHTML = `
             <div style="text-align: center; margin-top: 10px;">
-            <p style="color: red; margin-bottom: 8px;">Mmm, that's not a match! Try another combination.</p>
-            <img src="${gifKo}" style="width: 90px; border-radius: 8px;">
-        </div>
-    `;
-        
-    }
+                <p style="color: red; margin-bottom: 8px;">Not quite. Correct: <strong>${palabra.ingles}</strong></p>
+                <img src="${gifKo}" style="width: 90px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+            </div>
+        `;
         if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
         
         puntos = Math.max(0, puntos - 1);
-        actualizarPuntos();
-
+        if (typeof actualizarPuntos === 'function') actualizarPuntos();
+        
         setTimeout(() => {
-            btnVerificar.disabled = false;
-            document.getElementById("btn-borrar-todo").click(); // Resetea bloques automáticamente para un reintento veloz
-            feedback.textContent = "";
+            if (btnVerificar) btnVerificar.disabled = false;
+            feedback.innerHTML = "";
         }, 2000);
     }
 }
