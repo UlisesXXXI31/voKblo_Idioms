@@ -65,6 +65,11 @@
         <!-- Pantalla de Juego General (Traducir, Emparejar, etc.) -->
         <section id="pantalla-actividad" class="pantalla pantalla-oculta">
             <h2 id="titulo-actividad"></h2>
+
+            <div id="barra-progreso-contenedor-raiz" style="background: #e0e0e0; width: 100%; height: 12px; border-radius: 6px; margin-bottom: 20px; overflow: hidden; display: none;">
+    <div id="barra-progreso-element" style="background: #00bcd4; width: 0%; height: 100%; border-radius: 6px; transition: width 0.3s ease;"></div>
+              </div>
+              
             <div id="actividad-juego"></div>
             <div style="margin-top: 20px;">
                 <button id="btn-volver-lecciones" class="btn-volver">Back to the lessons</button>
