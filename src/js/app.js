@@ -255,54 +255,37 @@ if (btnVolverRanking) {
     // --- VARIABLES GLOBALES DE APOYO PARA PROGRESO ---
    //✨ FUNCIÓN CORREGIDA Y GENÉRICA:
 function actualizarBarraProgreso(actual, total) {
-    if (!total || total === 0) return;
-
-    const contenedor = document.getElementById("actividad-juego");
-    if (!contenedor) return;
-
-    let barra = document.getElementById("barra-progreso-elemento");
-    
-    if (!barra) {
-        // 1. Contenedor gris de fondo (Aseguramos bloques y márgenes visibles)
-        const contenedorBarra = document.createElement("div");
-        contenedorBarra.id = "barra-progreso-contenedor-raiz";
-        contenedorBarra.style.display = "block";
-        contenedorBarra.style.background = "#e0e0e0";
-        contenedorBarra.style.width = "100%";
-        contenedorBarra.style.height = "12px"; // Subimos a 12px para que tenga más cuerpo visual
-        contenedorBarra.style.borderRadius = "6px";
-        contenedorBarra.style.marginBottom = "20px";
-        contenedorBarra.style.overflow = "hidden";
-        contenedorBarra.style.position = "relative"; // Posicionamiento seguro
-
-        // 2. Barra interna turquesa (Forzamos altura y visualización)
-        barra = document.createElement("div");
-        barra.id = "barra-progreso-elemento";
-        barra.style.display = "block";
-        barra.style.background = "#00bcd4";
-        barra.style.height = "100%"; // Ocupa el 100% de los 12px del padre
-        barra.style.width = "0%";
-        barra.style.borderRadius = "6px";
-        barra.style.transition = "width 0.4s ease-out"; // Animación más fluida
-
-        contenedorBarra.appendChild(barra);
-        
-        // Lo insertamos justo arriba del todo en la caja del juego
-        contenedor.insertBefore(contenedorBarra, contenedor.firstChild);
+    if (!total || total === 0) {
+        // Si no hay preguntas o volvemos al menú, ocultamos la barra
+        const contenedorBarra = document.getElementById("barra-progreso-contenedor-raiz");
+        if (contenedorBarra) contenedorBarra.style.display = "none";
+        return;
     }
 
-    // 3. Calculamos el porcentaje
-    const porcentaje = (actual / total) * 100;
-    
-    // Parche estético: si es la pregunta 1 (0%), le damos un mini 2% para que se intuya el color al empezar
-    const anchoVisual = porcentaje === 0 ? 2 : porcentaje;
-    barra.style.width = `${anchoVisual}%`;
-    
-    console.log(`[Barra] Sincronizada en actividad actual: ${actual}/${total} (${porcentaje}%)`);
+    const contenedorBarra = document.getElementById("barra-progreso-contenedor-raiz");
+    const barra = document.getElementById("barra-progreso-element");
+
+    if (contenedorBarra && barra) {
+        // 🎯 1. Forzamos a que sea visible en cualquier actividad activa
+        contenedorBarra.style.display = "block";
+
+        // 🎯 2. Cálculo puro del porcentaje
+        const porcentaje = (actual / total) * 100;
+        
+        // Ajuste para que la pregunta 1 muestre un pequeño rastro de color
+        const anchoVisual = porcentaje === 0 ? 2 : porcentaje;
+        
+        // 🎯 3. Aplicamos el color de forma inmediata
+        barra.style.width = `${anchoVisual}%`;
+
+        console.log(`[Barra Estructurada] Posición: ${actual}/${total} (${porcentaje}%)`);
+    } else {
+        console.warn("⚠️ No se encontraron las IDs de la barra fija en el index.html");
+    }
 }
 
+// Aseguramos el entorno global
 window.actualizarBarraProgreso = actualizarBarraProgreso;
-
     // Iniciar actividad
     function iniciarActividad(idActividad) {
         actividadActual = idActividad;
