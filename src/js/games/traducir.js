@@ -197,9 +197,10 @@ function verificarTraducir(solucionCorrecta) {
         const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
         feedback.innerHTML = `
             <div style="text-align: center; margin-top: 10px;">
-                <p style="color: red; margin-bottom: 8px;">Not quite. This idiom is typically considered: <strong>${respuestaCorrecta}</strong></p>
-                <img src="${gifKo}" style="width: 90px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-            </div>
+            <p style="color: red; margin-bottom: 8px;">Mmm, that's not a match! Try another combination.</p>
+            <img src="${gifKo}" style="width: 90px; border-radius: 8px;">
+        </div>
+    `;
         `;
     }
         if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
