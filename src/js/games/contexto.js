@@ -48,13 +48,19 @@ if (btnIniciarExamen) {
 
 //  Función principal del juego 
 function mostrarPreguntaContexto() {
+   //Buscamos el contenedor raíz que está oculto
+    const contenedorRaizBarra = document.getElementById("barra-progreso-contenedor-raiz");
     
+    // SI EXISTE, LO HACEMOS VISIBLE CAMBIÁNDOLO A 'BLOCK'
+    if (contenedorRaizBarra) {
+        contenedorRaizBarra.style.display = "block";
+    }
+
+    // ACTUALIZACIÓN SEGURA DE LA BARRA DE PROGRESO
     if (typeof window.actualizarBarraProgreso === 'function') {
         window.actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
-    } else if (typeof actualizarBarraProgreso === 'function') {
-        actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
     }
-    
+
     const contenedorFrase = document.getElementById("frase-pregunta");
     const contenedorOpciones = document.getElementById("opciones-contexto");
     const progreso = document.getElementById("info-progreso");
