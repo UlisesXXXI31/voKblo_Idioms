@@ -120,14 +120,16 @@ function mostrarPreguntaContexto() {
             botones.forEach(b => b.disabled = true);
 
             if (opt === solucionCorrecta) {
-                if (feedback) {
                 const gifOk = window.minionsFelices[Math.floor(Math.random() * window.minionsFelices.length)];
-        feedback.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
-                <span style="color: green;">Spot on! Match correct. 🌟</span>
-                <img src="${gifOk}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
-            </div>
-               `;
+                if (typeof window.mostrarPopUpGif === 'function') {
+                    window.mostrarPopUpGif(gifKo, 1800);
+                  }
+                if (feedback) {
+                
+        feedback.innerHTML = 
+        `<p style="color: red; font-weight: bold; margin-top: 10px;">Spot on! Match correct. 🌟<strong>${palabra.ingles}</strong></p>`;
+            
+               
                 }
                 if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
                 
@@ -146,14 +148,15 @@ function mostrarPreguntaContexto() {
                 indiceContexto++;
                 setTimeout(mostrarPreguntaContexto, 1200); // Transición rápida
             } else {
+                const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
+                // Lanzamos el pop-up en medio de la pantalla durante 1.8 segundos
+               if (typeof window.mostrarPopUpGif === 'function') {
+                  window.mostrarPopUpGif(gifKo, 1800);
+                  }
                 if (feedback) {
-        const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
-        feedback.innerHTML = `
-            <div style="text-align: center; margin-top: 10px;">
-                <p style="color: red; margin-bottom: 8px;">Not quite. This idiom is typically considered: <strong>${respuestaCorrecta}</strong></p>
-                <img src="${gifKo}" style="width: 90px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-            </div>
-             `;
+        
+        feedback.innerHTML = 
+            `<p style="color: red; font-weight: bold; margin-top: 10px;">Not quite. Correct: <strong>${palabra.ingles}</strong></p> `;
                }
                 if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
                 
