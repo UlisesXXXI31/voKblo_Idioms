@@ -49,7 +49,6 @@ if (btnIniciarExamen) {
 // 3. Función principal del juego (¡100% Clics Rápidos!)
 function mostrarPreguntaContexto() {
     // 📊 ACTUALIZACIÓN SEGURA DE LA BARRA DE PROGRESO
-    // Al usar 'window.actualizarBarraProgreso' prevenimos errores de "not defined" si app.js tarda en cargar
     if (typeof window.actualizarBarraProgreso === 'function') {
         window.actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
     } else if (typeof actualizarBarraProgreso === 'function') {
@@ -69,7 +68,8 @@ function mostrarPreguntaContexto() {
     feedback.textContent = "";
 
     if (indiceContexto >= palabrasBloque.length) {
-        const copaAleatoria = gifsCopasVictoria[Math.floor(Math.random() * gifsCopasVictoria.length)];
+        // 🏆 CORRECCIÓN: Añadido window. para la lectura global estable de las copas
+        const copaAleatoria = window.gifsCopasVictoria[Math.floor(Math.random() * window.gifsCopasVictoria.length)];
 
         contenedorFrase.innerHTML = `
         <div style='text-align:center; padding: 20px;'>
@@ -115,25 +115,24 @@ function mostrarPreguntaContexto() {
         btn.textContent = opt;
         btn.className = "actividad-btn";
         btn.onclick = () => {
-            // Bloqueamos clics repetidos en los botones mientras se muestra el feedback
             const botones = contenedorOpciones.querySelectorAll("button");
             botones.forEach(b => b.disabled = true);
 
             if (opt === solucionCorrecta) {
+                // 🍏 CASO: ACIERTO
                 const gifOk = window.minionsFelices[Math.floor(Math.random() * window.minionsFelices.length)];
-                if (typeof window.mostrarPopUpGif === 'function') {
-                    window.mostrarPopUpGif(gifKo, 1800);
-                  }
-                if (feedback) {
                 
-        feedback.innerHTML = 
-        `<p style="color: red; font-weight: bold; margin-top: 10px;">Spot on! Match correct. 🌟<strong>${palabra.ingles}</strong></p>`;
-            
-               
+                // CORRECCIÓN: Cambiado 'gifKo' por 'gifOk' para que salga el minion feliz
+                if (typeof window.mostrarPopUpGif === 'function') {
+                    window.mostrarPopUpGif(gifOk, 1500);
+                }
+                
+                if (feedback) {
+                    // CORRECCIÓN: Cambiado 'palabra.ingles' por 'item.ingles' y estilo en verde
+                    feedback.innerHTML = `<p style="color: green; font-weight: bold; margin-top: 10px;">Spot on! Match correct. 🌟 <strong>${item.ingles}</strong></p>`;
                 }
                 if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
                 
-                // 🎉 Explosión de Confeti al acertar
                 if (typeof confetti === 'function') {
                     confetti({
                         particleCount: 100,
@@ -146,24 +145,26 @@ function mostrarPreguntaContexto() {
                 actualizarRacha();
                 actualizarPuntos();
                 indiceContexto++;
-                setTimeout(mostrarPreguntaContexto, 1200); // Transición rápida
+                setTimeout(mostrarPreguntaContexto, 1500); // Subido a 1.5s para disfrutar del pop-up feliz
+            
             } else {
+                // 🍎 CASO: FALLO
                 const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
-                // Lanzamos el pop-up en medio de la pantalla durante 1.8 segundos
-               if (typeof window.mostrarPopUpGif === 'function') {
-                  window.mostrarPopUpGif(gifKo, 1800);
-                  }
+                
+                if (typeof window.mostrarPopUpGif === 'function') {
+                    window.mostrarPopUpGif(gifKo, 1800);
+                }
+                
                 if (feedback) {
-        
-        feedback.innerHTML = 
-            `<p style="color: red; font-weight: bold; margin-top: 10px;">Not quite. Correct: <strong>${palabra.ingles}</strong></p> `;
-               }
+                    // CORRECCIÓN: Cambiado 'palabra.ingles' por 'item.ingles' para que no rompa
+                    feedback.innerHTML = `<p style="color: red; font-weight: bold; margin-top: 10px;">Not quite. Correct: <strong>${solucionCorrecta}</strong></p> `;
+                }
                 if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
                 
-                // Si falla, reactivamos botones para que pueda corregir tras un breve lapso
                 setTimeout(() => {
                     botones.forEach(b => b.disabled = false);
-                }, 1500);
+                    feedback.innerHTML = ""; // Limpiamos el texto al dejarles reintentar
+                }, 2000);
             }
         };
         contenedorOpciones.appendChild(btn);
