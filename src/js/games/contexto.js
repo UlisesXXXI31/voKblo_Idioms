@@ -48,9 +48,10 @@ if (btnIniciarExamen) {
 
 //  Función principal del juego 
 function mostrarPreguntaContexto() {
-    // 📊 ACTUALIZACIÓN SEGURA DE LA BARRA DE PROGRESO
     
-    if (typeof actualizarBarraProgreso === 'function') {
+    if (typeof window.actualizarBarraProgreso === 'function') {
+        window.actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
+    } else if (typeof actualizarBarraProgreso === 'function') {
         actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
     }
     
