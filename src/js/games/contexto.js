@@ -46,12 +46,11 @@ if (btnIniciarExamen) {
     });
 }
 
-// 3. Función principal del juego (¡100% Clics Rápidos!)
+//  Función principal del juego 
 function mostrarPreguntaContexto() {
     // 📊 ACTUALIZACIÓN SEGURA DE LA BARRA DE PROGRESO
-    if (typeof window.actualizarBarraProgreso === 'function') {
-        window.actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
-    } else if (typeof actualizarBarraProgreso === 'function') {
+    
+    if (typeof actualizarBarraProgreso === 'function') {
         actualizarBarraProgreso(indiceContexto, palabrasBloque.length);
     }
     
@@ -148,7 +147,7 @@ function mostrarPreguntaContexto() {
                 setTimeout(mostrarPreguntaContexto, 1500); // Subido a 1.5s para disfrutar del pop-up feliz
             
             } else {
-                // 🍎 CASO: FALLO
+                // FALLO
                 const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
                 
                 if (typeof window.mostrarPopUpGif === 'function') {
