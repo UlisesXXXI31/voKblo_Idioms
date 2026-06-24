@@ -275,7 +275,9 @@ function actualizarBarraProgreso(actual, total) {
     if (!total || total === 0) {
         // Si no hay preguntas o volvemos al menú, ocultamos la barra
         const contenedorBarra = document.getElementById("barra-progreso-contenedor-raiz");
-        if (contenedorBarra) contenedorBarra.style.display = "none";
+        
+        // 🛡️ Filtro de seguridad: Si no existe el elemento en esta pantalla (ej: Flashcards o Inicio), salimos en silencio sin romper nada
+         if (!contenedorBarra) 
         return;
     }
 
