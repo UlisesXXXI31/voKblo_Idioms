@@ -54,12 +54,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
 window.minionsFelices = [
     "https://i.imgur.com/vH9Z6gY.gif", // Minion celebrando/bailando limpio
-    "https://i.imgur.com/pZ6S8Xk.gif"  // Minions aplaudiendo con ganas
+    "https://i.imgur.com/gSawMde.gif"  // Minions aplaudiendo con ganas
 ];
 
 window.minionsTristes = [
-    "https://i.imgur.com/XvM8D0E.gif", // Minion llorando en el suelo
-    "https://i.imgur.com/T0WlOnr.gif"  // Minion confundido / "¿Qué?!"
+    "https://i.imgur.com/J1aQmdL.gif", // Minion llorando en el suelo
+    "https://i.imgur.com/IKrsnZ4.gif"  // Minion confundido / "¿Qué?!"
 ];
 
 window.gifsCopasVictoria = [
