@@ -51,18 +51,18 @@ document.addEventListener("DOMContentLoaded", () => {
     // 🎯 Reemplaza las listas en tu app.js con estos links estables:
 
 window.minionsFelices = [
-    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMTFzQlhWeE5zN3Y2V0EvZ2lmX2J5X2lkJnN0PXRydWUmY3Q9Zw/11sBLVxNs7v6WA/giphy.gif", // Aplauso
-    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExa2lCY3dFWGVnN2JpbmRoSVkmc3Q9dHJ1ZSZjdD1n/kiBcwEXeg7bindAhIY/giphy.gif"   // Baile
+    "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif", // Aplauso
+    "https://media.giphy.com/media/kiBcwEXeg7bindAhIY/giphy.gif"   // Baile
 ];
 
 window.minionsTristes = [
-    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExOVk1QmJEU2tTVGlZOFZJZm96Y3Q9Zw/9Y5BbDSkSTiY8/giphy.gif", // Llorando
-    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExWTNibWU3NjdMSk1LNCZjdD1n/Y3bme767LJMK4/giphy.gif"  // Decepción
+    "https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif", // Llorando
+    "https://media.giphy.com/media/Y3bme767LJMK4/giphy.gif"  // Decepción ("What?!")
 ];
 
 window.gifsCopasVictoria = [
-    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM283cUUxWU43YUJPRlBSdzhFInternal/3o7qE1YN7aBOFPRw8E/giphy.gif",
-    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjZ1NGN3YjNkVjFjQm1TVGFFInternal/26u4cwb3dV1cBm9Ta/giphy.gif"
+    "https://media.giphy.com/media/3o7qE1YN7aBOFPRw8E/giphy.gif", // Copa confeti
+    "https://media.giphy.com/media/26u4cwb3dV1cBm9Ta/giphy.gif"  // Trofeo brillante
 ];
 
      // <<< INICIO CÓDIGO RACHA - Elemento DOM >>>
