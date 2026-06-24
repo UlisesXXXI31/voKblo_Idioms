@@ -400,4 +400,59 @@ if (btnVol) {
         mostrarPantalla("pantalla-actividades");
     };
 }
+
+function mostrarPopUpGif(urlGif, duracion = 1500) {
+    // 1. Creamos la capa negra de fondo (overlay) que cubre la pantalla
+    const overlay = document.createElement("div");
+    overlay.id = "minion-pop-up-overlay";
+    overlay.style.position = "fixed";
+    overlay.style.top = "0";
+    overlay.style.left = "0";
+    overlay.style.width = "100vw";
+    overlay.style.height = "100vh";
+    overlay.style.backgroundColor = "rgba(0, 0, 0, 0.6)"; // Fondo oscuro semitransparente
+    overlay.style.display = "flex";
+    overlay.style.justifyContent = "center";
+    overlay.style.alignItems = "center";
+    overlay.style.zIndex = "99999"; // Por encima de TODO
+    overlay.style.opacity = "0";
+    overlay.style.transition = "opacity 0.2s ease-out";
+
+    // 2. Creamos la caja del GIF con una animación de escalado (Pop)
+    const cajaContenedora = document.createElement("div");
+    cajaContenedora.style.transform = "scale(0.7)";
+    cajaContenedora.style.transition = "transform 0.2s ease-out";
+    
+    const img = document.createElement("img");
+    img.src = urlGif;
+    img.style.width = "280px"; // 📐 Tamaño mayor y vistoso
+    img.style.height = "auto";
+    img.style.borderRadius = "15px";
+    img.style.boxShadow = "0 10px 30px rgba(0,0,0,0.5)";
+
+    cajaContenedora.appendChild(img);
+    overlay.appendChild(cajaContenedora);
+    document.body.appendChild(overlay);
+
+    // 3. Activamos las animaciones de entrada un milisegundo después de meterlo al DOM
+    setTimeout(() => {
+        overlay.style.opacity = "1";
+        cajaContenedora.style.transform = "scale(1)";
+    }, 10);
+
+    // 4. Lo desvanecemos y destruimos automáticamente cuando pase el tiempo (duracion)
+    setTimeout(() => {
+        overlay.style.opacity = "0";
+        cajaContenedora.style.transform = "scale(0.8)";
+        
+        // Esperamos a que termine la animación de salida para borrarlo del HTML
+        setTimeout(() => {
+            if (overlay.parentNode) overlay.parentNode.removeChild(overlay);
+        }, 200);
+    }, duracion);
+}
+
+// Lo hacemos accesible para todos los archivos del juego
+window.mostrarPopUpGif = mostrarPopUpGif;
 });
+
