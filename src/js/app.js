@@ -48,21 +48,21 @@ document.addEventListener("DOMContentLoaded", () => {
     const btnVolverActividades = document.getElementById("btn-volver-actividades");
     const btnLogout = document.getElementById('btn-logout');
 
-    // 🎯 Reemplaza las listas en tu app.js con estos links estables:
-
+   
+//Variable sglobales gifs
 window.minionsFelices = [
-    "https://media.giphy.com/media/11sBLVxNs7v6WA/giphy.gif", // Aplauso
-    "https://media.giphy.com/media/kiBcwEXeg7bindAhIY/giphy.gif"   // Baile
+    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3ZhcWtsYmR0Z3Z4cmRibmtqZXp3cmM3b3k4am95ZnA0OHgzd3N4ciZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/11sBLVxNs7v6WA/giphy.gif", // Aplauso
+    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3IyeXAyZ3Z2aGN0N3BrMnM5M3ptMTg5MWh5bms4bHpxM2tjcHd0ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/kiBcwEXeg7bindAhIY/giphy.gif"   // Baile
 ];
 
 window.minionsTristes = [
-    "https://media.giphy.com/media/9Y5BbDSkSTiY8/giphy.gif", // Llorando
-    "https://media.giphy.com/media/Y3bme767LJMK4/giphy.gif"  // Decepción ("What?!")
+    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Y5dzZidm03Y3J6N3N0Znd6cmg0NjF6bWh0Mml0ZmdmZXN4OHg0ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/9Y5BbDSkSTiY8/giphy.gif", // Llorando
+    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExbms1Nmw0MDZ5Ym9pY3R0NzB6ZTh5cHZ6NTN6Y3p5Z3Z0MXA0Y3ZsNSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/Y3bme767LJMK4/giphy.gif"  // Decepción
 ];
 
 window.gifsCopasVictoria = [
-    "https://media.giphy.com/media/3o7qE1YN7aBOFPRw8E/giphy.gif", // Copa confeti
-    "https://media.giphy.com/media/26u4cwb3dV1cBm9Ta/giphy.gif"  // Trofeo brillante
+    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExM283cUUxWU43YUJPRlBSdzhFInternal/3o7qE1YN7aBOFPRw8E/giphy.gif", // Copa
+    "https://i.giphy.com/media/v1.Y2lkPTc5MGI3NjExMjZ1NGN3YjNkVjFjQm1TVGFFInternal/26u4cwb3dV1cBm9Ta/giphy.gif"  // Trofeo
 ];
 
      // <<< INICIO CÓDIGO RACHA - Elemento DOM >>>
