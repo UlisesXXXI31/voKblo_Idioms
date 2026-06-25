@@ -53,7 +53,7 @@ document.addEventListener("DOMContentLoaded", () => {
 // 🎯 configuración robusta:Variable sglobales gifs
 
 window.minionsFelices = [
-    "https://i.imgur.com/vH9Z6gY.gif", // Minion celebrando/bailando limpio
+    "https://i.imgur.com/h2Upoow.gif", // Minion celebrando/bailando limpio
     "https://i.imgur.com/gSawMde.gif"  // Minions aplaudiendo con ganas
 ];
 

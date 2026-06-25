@@ -125,7 +125,7 @@ function mostrarPreguntaContexto() {
             botones.forEach(b => b.disabled = true);
 
             if (opt === solucionCorrecta) {
-                // 🍏 CASO: ACIERTO
+                // CASO: ACIERTO
                 const gifOk = window.minionsFelices[Math.floor(Math.random() * window.minionsFelices.length)];
                 
                 // CORRECCIÓN: Cambiado 'gifKo' por 'gifOk' para que salga el minion feliz
