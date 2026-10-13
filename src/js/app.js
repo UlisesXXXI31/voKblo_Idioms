@@ -50,21 +50,21 @@ document.addEventListener("DOMContentLoaded", () => {
 
    
 
-// 🎯 configuración robusta:Variable sglobales gifs
+// 🎯 configuración robusta:Variable globales gifs
 
 window.minionsFelices = [
     "https://i.imgur.com/h2Upoow.gif", // Minion celebrando/bailando limpio
-    "https://i.imgur.com/gSawMde.gif"  // Minions aplaudiendo con ganas
+    "https://i.imgur.com/gSawMde.gif"  // Minions gritando con ganas
 ];
 
 window.minionsTristes = [
-    "https://i.imgur.com/J1aQmdL.gif", // Minion llorando en el suelo
+    "https://i.imgur.com/J1aQmdL.gif", // presentador desesperado
     "https://i.imgur.com/IKrsnZ4.gif"  // Minion confundido / "¿Qué?!"
 ];
 
 window.gifsCopasVictoria = [
-    "https://i.imgur.com/6S3Vp7R.gif", // Trofeo de oro con destellos
-    "https://i.imgur.com/mOkaZfH.gif"  // Copa de campeón con confeti cayendo
+    "https://cdnl.iconscout.com/lottie/premium/thumb/copa-trofeo-rays-animation-gif-download-11682257.gif" // Trofeo de oro con destellos
+    
 ];
 
      // <<< INICIO CÓDIGO RACHA - Elemento DOM >>>

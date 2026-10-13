@@ -155,10 +155,10 @@ function mostrarPreguntaContexto() {
             
             } else {
                 // FALLO
-                const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
+                const gifOk = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
                 
                 if (typeof window.mostrarPopUpGif === 'function') {
-                    window.mostrarPopUpGif(gifKo, 1800);
+                    window.mostrarPopUpGif(gifOk, 1800);
                 }
                 
                 if (feedback) {

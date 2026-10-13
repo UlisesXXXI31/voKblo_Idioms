@@ -21,7 +21,7 @@ function mostrarPreguntaEleccion() {
     const contenedorPrincipal = document.getElementById("actividad-juego");
     if (!contenedorPrincipal) return;
     
-    // 1. Si la actividad terminó, mostramos el mensaje final
+    //  Si la actividad terminó, mostramos el mensaje final
     if (eleccionIndice >= eleccionPalabras.length) {
 
         const copaAleatoria = gifsCopasVictoria[Math.floor(Math.random() * gifsCopasVictoria.length)];
@@ -45,7 +45,7 @@ function mostrarPreguntaEleccion() {
     const palabra = eleccionPalabras[eleccionIndice];
     const opciones = ["formal", "informal", "idiomatic/neutral"];
     
-    // 🎯 CORRECCIÓN: Usamos 'contenedorPrincipal' en lugar de la variable inexistente 'interfazJuego'
+    // CORRECCIÓN: Usamos 'contenedorPrincipal' en lugar de la variable inexistente 'interfazJuego'
     contenedorPrincipal.innerHTML = `
         <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 500;">
             Pregunta ${eleccionIndice + 1} de ${eleccionPalabras.length}
@@ -59,7 +59,7 @@ function mostrarPreguntaEleccion() {
         <div id="mensaje-feedback" style="margin-top:1rem; font-weight: bold; min-height: 20px;"></div>
     `;
     
-    // 5. 🚀 Actualizamos la barra (ahora sí, compartida y a salvo)
+    //  Actualizamos la barra (ahora sí, compartida y a salvo)
     if (typeof window.actualizarBarraProgreso === 'function') {
         window.actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
     } else if (typeof actualizarBarraProgreso === 'function') {
