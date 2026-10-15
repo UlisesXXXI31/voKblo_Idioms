@@ -2,7 +2,7 @@ let palabrasBloque = [];
 let indiceContexto = 0;
 
     
-// 1. Función para iniciar la configuración
+// Función para iniciar la configuración
 function iniciarContexto() {
     palabrasBloque = filtrarPalabrasParaActividad();
 
@@ -22,7 +22,7 @@ function iniciarContexto() {
     if (juegoDiv) juegoDiv.classList.add("pantalla-oculta");
 }
 
-// 2. Evento para el botón de empezar examen
+// Evento para el botón de empezar examen
 const btnIniciarExamen = document.getElementById("btn-iniciar-examen");
 if (btnIniciarExamen) {
     btnIniciarExamen.addEventListener("click", () => {

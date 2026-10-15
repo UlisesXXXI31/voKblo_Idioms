@@ -24,7 +24,7 @@ function mostrarPreguntaEleccion() {
     //  Si la actividad terminó, mostramos el mensaje final
     if (eleccionIndice >= eleccionPalabras.length) {
 
-        const copaAleatoria = gifsCopasVictoria[Math.floor(Math.random() * gifsCopasVictoria.length)];
+        const copaAleatoria = window.gifsCopasVictoria[Math.floor(Math.random() * window.gifsCopasVictoria.length)];
 
         contenedorPrincipal.innerHTML = `
             <div style='text-align:center; padding: 20px;'>
@@ -45,7 +45,7 @@ function mostrarPreguntaEleccion() {
     const palabra = eleccionPalabras[eleccionIndice];
     const opciones = ["formal", "informal", "idiomatic/neutral"];
     
-    // CORRECCIÓN: Usamos 'contenedorPrincipal' en lugar de la variable inexistente 'interfazJuego'
+    
     contenedorPrincipal.innerHTML = `
         <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 500;">
             Pregunta ${eleccionIndice + 1} de ${eleccionPalabras.length}
@@ -81,8 +81,14 @@ function mostrarPreguntaEleccion() {
             botones.forEach(b => b.disabled = true);
             
             if (opcion === respuestaCorrecta) {
-                if (feedback) {
+                
                     const gifOk = window.minionsFelices[Math.floor(Math.random() * window.minionsFelices.length)];
+
+                    if (typeof window.mostrarPopUpGif === 'function') {
+                    window.mostrarPopUpGif(gifOk, 1500);
+                }
+        
+    if (feedback) {
         feedback.innerHTML = `
             <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
                 <span style="color: green;">Spot on! Match correct. 🌟</span>
@@ -92,6 +98,7 @@ function mostrarPreguntaEleccion() {
                 }
                 if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
                 
+              if(typeof confetti === 'function') {
                 confetti({
                     particleCount: 100,
                     spread: 70,
@@ -103,10 +110,15 @@ function mostrarPreguntaEleccion() {
                 actualizarPuntos();
                 localStorage.setItem('puntosTotales', puntos.toString());
                 eleccionIndice++;
-                setTimeout(mostrarPreguntaEleccion, 1200);
+                setTimeout(mostrarPreguntaEleccion, 1500);
             } else {
-                if (feedback) {
-                    const gifKo = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
+                
+                const gifOk = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
+        
+                if (typeof window.mostrarPopUpGif === 'function') {
+                    window.mostrarPopUpGif(gifOk, 1800);
+                }
+        
         feedback.innerHTML = `
             <div style="text-align: center; margin-top: 10px;">
                 <p style="color: red; margin-bottom: 8px;">Not quite. This idiom is typically considered: <strong>${respuestaCorrecta}</strong></p>
@@ -122,7 +134,7 @@ function mostrarPreguntaEleccion() {
                 setTimeout(() => {
                     botones.forEach(b => b.disabled = false);
                     if (feedback) feedback.textContent = "";
-                }, 1500);
+                }, 2000);
             }
         });
         if (opcionesContainer) opcionesContainer.appendChild(btn);
