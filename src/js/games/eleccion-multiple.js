@@ -26,8 +26,8 @@ function mostrarPreguntaEleccion() {
 
         const copaAleatoria = window.gifsCopasVictoria[Math.floor(Math.random() * window.gifsCopasVictoria.length)];
 
-        contenedorPrincipal.innerHTML = `
-            <div style='text-align:center; padding: 20px;'>
+        contenedorFrase.innerHTML = `
+        <div style='text-align:center; padding: 20px;'>
             <h3 style="color: #ffb300; font-size: 1.8rem; margin-bottom: 10px; font-weight: bold;">Activity Completed! 🏆</h3>
             <p style="font-size: 1.1rem; color: #555; margin-bottom: 20px;">You have mastered the register and nuances of these C2 idioms.</p>
             
@@ -122,7 +122,7 @@ function mostrarPreguntaEleccion() {
         feedback.innerHTML = `
             <div style="text-align: center; margin-top: 10px;">
                 <p style="color: red; margin-bottom: 8px;">Not quite. This idiom is typically considered: <strong>${respuestaCorrecta}</strong></p>
-                <img src="${gifKo}" style="width: 90px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
+                <img src="${gifOk}" style="width: 90px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
             </div>
               `;
                 }
