@@ -78,40 +78,12 @@ function guardarPuntuacionEnHistorial() {
         btnGuardar.style.backgroundColor = "#ccc"; 
     }
     
-    // --- LÓGICA DE COMPLETADO ---
-    let isCompleted = false;
-    if (actividadActual && leccionActual && leccionActual.palabras) {
-        let totalItems = leccionActual.palabras.length;
-        let currentIndex = 0;
-
-        if (actividadActual === 'flashcards') {
-            currentIndex = typeof flashcardsIndice !== 'undefined' ? flashcardsIndice : 0;
-        } else if (actividadActual === 'traducir') {
-            currentIndex = traducirIndice;
-        } else if (actividadActual === 'eleccion-multiple') {
-            currentIndex = eleccionIndice;
-        } else if (actividadActual === 'escuchar') {
-            currentIndex = escucharIndice;
-        } else if (actividadActual === 'pronunciar') {
-            currentIndex = indicePalabraActual;
-        } else if (actividadActual === 'contexto') {
-            currentIndex = indiceContexto;
-            totalItems = typeof palabrasBloque !== 'undefined' ? palabrasBloque.length : 20; 
-        } else if (actividadActual === 'emparejar') {
-            if (emparejarBloque * BLOQUE_TAMANIO >= totalItems) isCompleted = true;
-        }
-
-        if (actividadActual !== 'emparejar') {
-            if (currentIndex >= totalItems && totalItems > 0) isCompleted = true;
-        }
-    }
-
     const progressData = {
         user: userData.id, 
         lessonName: leccionActual ? leccionActual.nombre : "General", 
         taskName: actividadActual,
         score: parseInt(puntosSesion),
-        completed: isCompleted
+        completed: actividadCompletada
     };
 
     console.log("Enviando a la API:", progressData);

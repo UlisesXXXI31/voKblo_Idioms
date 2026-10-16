@@ -1,142 +1,92 @@
 let eleccionPalabras = [];
 let eleccionIndice = 0;
 
-
 function iniciarEleccionMultiple() {
-    eleccionPalabras = obtenerPalabrasSeleccionadas();
-    eleccionPalabras.sort(() => Math.random() - 0.5);
+    eleccionPalabras = mezclarCopia(obtenerPalabrasSeleccionadas());
     eleccionIndice = 0;
-    
-    // Dejamos el contenedor listo con espacio para el sub-juego sin tocar la barra externa
-    const actividadJuego = document.getElementById("actividad-juego");
-    if (actividadJuego && !document.getElementById("interfaz-opciones")) {
-        const subContenedor = document.createElement("div");
-        subContenedor.id = "interfaz-opciones";
-        actividadJuego.appendChild(subContenedor);
+
+    if (eleccionPalabras.length === 0) {
+        mostrarActividadVacia();
+        return;
     }
 
     mostrarPreguntaEleccion();
 }
+
 function mostrarPreguntaEleccion() {
-    const contenedorPrincipal = document.getElementById("actividad-juego");
-    if (!contenedorPrincipal) return;
-    
-    //  Si la actividad terminó, mostramos el mensaje final
+    const contenedor = document.getElementById("actividad-juego");
+    if (!contenedor) return;
+
     if (eleccionIndice >= eleccionPalabras.length) {
-
-        const copaAleatoria = window.gifsCopasVictoria[Math.floor(Math.random() * window.gifsCopasVictoria.length)];
-
-        contenedorFrase.innerHTML = `
-        <div style='text-align:center; padding: 20px;'>
-            <h3 style="color: #ffb300; font-size: 1.8rem; margin-bottom: 10px; font-weight: bold;">Activity Completed! 🏆</h3>
-            <p style="font-size: 1.1rem; color: #555; margin-bottom: 20px;">You have mastered the register and nuances of these C2 idioms.</p>
-            
-            <div style="margin: 20px auto; max-width: 260px;">
-                <img src="${copaAleatoria}" 
-                     alt="Victory Trophy" 
-                     style="width: 100%; border-radius: 12px; box-shadow: 0 6px 20px rgba(255, 179, 0, 0.3);">
-            </div>
-        </div>`;
-        if (typeof actualizarBarraProgreso === 'function') actualizarBarraProgreso(0, 0);
-        guardarPuntuacionEnHistorial(); 
+        actividadCompletada = true;
+        mostrarActividadCompletada(contenedor, "You have completed the register and nuance activity.");
         return;
     }
 
     const palabra = eleccionPalabras[eleccionIndice];
+    const sesion = sesionActividad;
     const opciones = ["formal", "informal", "idiomatic/neutral"];
-    
-    
-    contenedorPrincipal.innerHTML = `
-        <p style="color: #666; font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 500;">
-            Pregunta ${eleccionIndice + 1} de ${eleccionPalabras.length}
-        </p>
-        <p><strong>C2 Idiom:</strong> <span style="font-size: 1.2rem; color: #0070f3;">${palabra.ingles}</span></p>
-        <p style="font-style: italic; color: #555; margin-bottom: 1.5rem;">
-            <strong>Usage Note:</strong> ${palabra.contexto_uso || "Advanced descriptive context..."}
-        </p>
-        <p><em>Select the correct register:</em></p>
+    contenedor.innerHTML = `
+        <p>Question ${eleccionIndice + 1} of ${eleccionPalabras.length}</p>
+        <p><strong>Idiom:</strong> <span style="font-size:1.2rem;color:#0070f3"></span></p>
+        <p><strong>Usage note:</strong> <span id="nota-uso"></span></p>
+        <p>Select the correct register:</p>
         <div id="opciones-multiple"></div>
-        <div id="mensaje-feedback" style="margin-top:1rem; font-weight: bold; min-height: 20px;"></div>
+        <div id="feedback-eleccion" role="status" aria-live="polite"></div>
     `;
-    
-    //  Actualizamos la barra (ahora sí, compartida y a salvo)
-    if (typeof window.actualizarBarraProgreso === 'function') {
-        window.actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
-    } else if (typeof actualizarBarraProgreso === 'function') {
-        actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
-    }
-    
-    const opcionesContainer = document.getElementById("opciones-multiple");
-    const feedback = document.getElementById("mensaje-feedback");
-    
-    opciones.forEach(opcion => {
-        const btn = document.createElement("button");
-        btn.textContent = opcion.charAt(0).toUpperCase() + opcion.slice(1);
-        btn.className = "btn-opcion";
-        btn.style.margin = "0.3rem";
-        
-        btn.addEventListener("click", () => {
-            const respuestaCorrecta = (palabra.formalidad || "informal").toLowerCase().trim();
-            const botones = opcionesContainer.querySelectorAll("button");
-            botones.forEach(b => b.disabled = true);
-            
-            if (opcion === respuestaCorrecta) {
-                
-                    const gifOk = window.minionsFelices[Math.floor(Math.random() * window.minionsFelices.length)];
+    contenedor.querySelector("p strong + span").textContent = palabra.ingles || "";
+    contenedor.querySelector("#nota-uso").textContent = palabra.contexto_uso || "No usage note available.";
 
-                    if (typeof window.mostrarPopUpGif === 'function') {
-                    window.mostrarPopUpGif(gifOk, 1500);
+    if (typeof window.actualizarBarraProgreso === "function") {
+        window.actualizarBarraProgreso(eleccionIndice, eleccionPalabras.length);
+    }
+
+    const opcionesContainer = contenedor.querySelector("#opciones-multiple");
+    const feedback = contenedor.querySelector("#feedback-eleccion");
+    opciones.forEach(opcion => {
+        const boton = document.createElement("button");
+        boton.type = "button";
+        boton.textContent = opcion;
+        boton.className = "btn-opcion";
+        boton.addEventListener("click", () => {
+            const botones = opcionesContainer.querySelectorAll("button");
+            botones.forEach(item => item.disabled = true);
+            const respuestaCorrecta = (palabra.formalidad || "informal").trim().toLowerCase();
+
+            if (opcion === respuestaCorrecta) {
+                feedback.textContent = "Correct! 🌟";
+                feedback.style.color = "green";
+                if (typeof window.mostrarPopUpGif === "function" && window.minionsFelices?.length) {
+                    window.mostrarPopUpGif(window.minionsFelices[Math.floor(Math.random() * window.minionsFelices.length)], 1200);
                 }
-        
-    if (feedback) {
-        feedback.innerHTML = `
-            <div style="display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px;">
-                <span style="color: green;">Spot on! Match correct. 🌟</span>
-                <img src="${gifOk}" style="width: 45px; height: 45px; border-radius: 50%; object-fit: cover;">
-            </div>
-             `;
-                }
-                if (typeof sonidoCorrcto !== 'undefined') sonidoCorrcto.play();
-                
-              if(typeof confetti === 'function') {
-                confetti({
-                    particleCount: 100,
-                    spread: 70,
-                    origin: { y: 0.6 }
-                });
-                
+                reproducirSonidoActividad(sonidoCorrcto);
+                if (typeof confetti === "function") confetti({ particleCount: 80, spread: 65, origin: { y: 0.6 } });
                 puntos++;
-                actualizarRacha(); 
+                localStorage.setItem("puntosTotales", puntos.toString());
                 actualizarPuntos();
-                localStorage.setItem('puntosTotales', puntos.toString());
+                actualizarRacha();
                 eleccionIndice++;
-                setTimeout(mostrarPreguntaEleccion, 1500);
-            } else {
-                
-                const gifOk = window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)];
-        
-                if (typeof window.mostrarPopUpGif === 'function') {
-                    window.mostrarPopUpGif(gifOk, 1800);
-                }
-        
-        feedback.innerHTML = `
-            <div style="text-align: center; margin-top: 10px;">
-                <p style="color: red; margin-bottom: 8px;">Not quite. This idiom is typically considered: <strong>${respuestaCorrecta}</strong></p>
-                <img src="${gifOk}" style="width: 90px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.15);">
-            </div>
-              `;
-                }
-                if (typeof sonidoIncorrecto !== 'undefined') sonidoIncorrecto.play();
-                
-                puntos = Math.max(0, puntos - 1);
-                actualizarPuntos();
-                
                 setTimeout(() => {
-                    botones.forEach(b => b.disabled = false);
-                    if (feedback) feedback.textContent = "";
-                }, 2000);
+                    if (sesion === sesionActividad) mostrarPreguntaEleccion();
+                }, 1200);
+                return;
             }
+
+            feedback.textContent = `Not quite. The correct register is: ${respuestaCorrecta}.`;
+            feedback.style.color = "red";
+            if (typeof window.mostrarPopUpGif === "function" && window.minionsTristes?.length) {
+                window.mostrarPopUpGif(window.minionsTristes[Math.floor(Math.random() * window.minionsTristes.length)], 1500);
+            }
+            reproducirSonidoActividad(sonidoIncorrecto);
+            puntos = Math.max(0, puntos - 1);
+            localStorage.setItem("puntosTotales", puntos.toString());
+            actualizarPuntos();
+            setTimeout(() => {
+                if (sesion !== sesionActividad || !feedback.isConnected) return;
+                botones.forEach(item => item.disabled = false);
+                feedback.textContent = "";
+            }, 1500);
         });
-        if (opcionesContainer) opcionesContainer.appendChild(btn);
+        opcionesContainer.appendChild(boton);
     });
 }

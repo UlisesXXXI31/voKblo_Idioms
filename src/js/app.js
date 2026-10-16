@@ -143,7 +143,31 @@ registerServiceWorker();
 
     function seleccionarLeccion(leccion) {
         leccionActual = leccion;
+        if (tituloLeccion) tituloLeccion.textContent = leccion.nombre;
+        actualizarSelectorBloques(leccion);
         mostrarListaPalabras(leccion);
+    }
+
+    function actualizarSelectorBloques(leccion) {
+        const selector = document.getElementById("selector-bloque-examen");
+        if (!selector) return;
+
+        const total = leccion.palabras.length;
+        const bloques = Math.ceil(total / 20);
+        selector.innerHTML = "";
+        for (let numero = 1; numero <= bloques; numero++) {
+            const inicio = (numero - 1) * 20 + 1;
+            const fin = Math.min(numero * 20, total);
+            const opcion = document.createElement("option");
+            opcion.value = numero.toString();
+            opcion.textContent = `Block ${numero} (${inicio} - ${fin})`;
+            selector.appendChild(opcion);
+        }
+        const todos = document.createElement("option");
+        todos.value = "todos";
+        todos.textContent = "General review";
+        selector.appendChild(todos);
+        selector.value = "1";
     }
 
     function mostrarListaPalabras(leccion) {
@@ -172,7 +196,7 @@ registerServiceWorker();
             { id: "traducir", nombre: "Sentence transformation" },
             { id: "emparejar", nombre: "Match the idioms" },
             { id: "eleccion-multiple", nombre: "register & Nuances" },
-            { id: "contexto", nombre: "Context (Bloques 20)" } 
+            { id: "contexto", nombre: "Context quiz" }
         ];
         actividades.forEach(act => {
             const btn = document.createElement("button");
@@ -207,6 +231,7 @@ registerServiceWorker();
 
     if (btnVolverActividades) {
         btnVolverActividades.onclick = () => {
+            sesionActividad++;
             mostrarPantalla("pantalla-actividades");
             actividadJuego.innerHTML = "";
         };
@@ -214,6 +239,7 @@ registerServiceWorker();
 
     if (btnVolverLecciones) {
         btnVolverLecciones.addEventListener("click", () => {
+            sesionActividad++;
             mostrarPantalla("pantalla-lecciones");
             mostrarLecciones();
             actividadJuego.innerHTML = "";
@@ -274,42 +300,27 @@ if (btnVolverRanking) {
     // --- VARIABLES GLOBALES DE APOYO PARA PROGRESO ---
    //✨ FUNCIÓN CORREGIDA Y GENÉRICA:
 function actualizarBarraProgreso(actual, total) {
-    if (!total || total === 0) {
-        // Si no hay preguntas o volvemos al menú, ocultamos la barra
-        const contenedorBarra = document.getElementById("barra-progreso-contenedor-raiz");
-        
-        // 🛡️ Filtro de seguridad: Si no existe el elemento en esta pantalla (ej: Flashcards o Inicio), salimos en silencio sin romper nada
-         if (!contenedorBarra) 
+    const contenedorBarra = document.getElementById("barra-progreso-contenedor-raiz");
+    const barra = document.getElementById("barra-progreso-element");
+    if (!contenedorBarra || !barra) return;
+    if (!Number.isFinite(total) || total <= 0) {
+        contenedorBarra.style.display = "none";
+        barra.style.width = "0%";
         return;
     }
 
-    const contenedorBarra = document.getElementById("barra-progreso-contenedor-raiz");
-    const barra = document.getElementById("barra-progreso-element");
-
-    if (contenedorBarra && barra) {
-        // 🎯 1. Forzamos a que sea visible en cualquier actividad activa
-        contenedorBarra.style.display = "block";
-
-        // 🎯 2. Cálculo puro del porcentaje
-        const porcentaje = (actual / total) * 100;
-        
-        // Ajuste para que la pregunta 1 muestre un pequeño rastro de color
-        const anchoVisual = porcentaje === 0 ? 2 : porcentaje;
-        
-        // 🎯 3. Aplicamos el color de forma inmediata
-        barra.style.width = `${anchoVisual}%`;
-
-        console.log(`[Barra Estructurada] Posición: ${actual}/${total} (${porcentaje}%)`);
-    } else {
-        console.warn("⚠️ No se encontraron las IDs de la barra fija en el index.html");
-    }
+    contenedorBarra.style.display = "block";
+    const porcentaje = Math.max(0, Math.min(100, (actual / total) * 100));
+    barra.style.width = `${porcentaje === 0 ? 2 : porcentaje}%`;
 }
 
 // Aseguramos el entorno global
 window.actualizarBarraProgreso = actualizarBarraProgreso;
     // Iniciar actividad
     function iniciarActividad(idActividad) {
+        sesionActividad++;
         actividadActual = idActividad;
+        actividadCompletada = false;
         if (tituloActividad) {
             tituloActividad.textContent = {
                 "flashcards": "Actividad: Flashcards",
@@ -320,21 +331,8 @@ window.actualizarBarraProgreso = actualizarBarraProgreso;
             }[idActividad] || "Actividad";
         }
         
-        if (actividadJuego) {actividadJuego.innerHTML = `<!-- Contenedor exterior de la barra de progreso estilo Duolingo -->
-            <div id="wrapper-progreso" style="background-color: #e0e0e0; border-radius: 10px; width: 100%; height: 12px; margin: 10px 0 20px 0; overflow: hidden; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);">
-                <div id="barra-progreso-juego" style="background-color: #4caf50; width: 0%; height: 100%; transition: width 0.4s ease-in-out; border-radius: 10px;"></div>
-            </div>
-            <!-- Contenedor dinámico secundario donde se renderizará el juego en sí -->
-            <div id="contenido-sub-juego"></div>
-        `;
-        }
-
-        //Modificamos el contenedor objetivo para que los juegos no borren la barra de progreso
-    // cambiamos temporalmente la referencia o adaptando el flujo:
-    const contenedorOriginal = actividadJuego;
-    
-    // Forzamos a que el renderizado de los juegos caiga en nuestro nuevo sub-contenedor
-    const subContenedor = document.getElementById("contenido-sub-juego");
+        if (actividadJuego) actividadJuego.innerHTML = "";
+        if (typeof window.actualizarBarraProgreso === "function") window.actualizarBarraProgreso(0, 0);
 
         mostrarPantalla("pantalla-actividad");
            if (idActividad === "flashcards"){
@@ -358,14 +356,6 @@ window.actualizarBarraProgreso = actualizarBarraProgreso;
   
 
 
-// 4. Botón Volver
-const btnVolverContexto = document.getElementById("btn-volver-de-contexto");
-if (btnVolverContexto) {
-    btnVolverContexto.onclick = () => {
-        mostrarPantalla("pantalla-actividades");
-        mostrarActividades(); // Corregido el nombre (con 'r')
-    };
-}
     //------FLASHCARDS---------
     // Girar al tocar la tarjeta
 const objTarjeta = document.getElementById("tarjeta-objeto");
@@ -381,7 +371,8 @@ if (btnSig) {
             indiceFlash++;
             actualizarContenidoTarjeta();
         } else {
-            alert("¡Has terminado el repaso de este bloque!");
+            indiceFlash = listaFlashcards.length;
+            actualizarContenidoTarjeta();
         }
     };
 }
@@ -401,7 +392,9 @@ if (btnAnt) {
 const btnVol = document.getElementById("btn-flash-volver");
 if (btnVol) {
     btnVol.onclick = () => {
+        sesionActividad++;
         mostrarPantalla("pantalla-actividades");
+        mostrarActividades();
     };
 }
 
@@ -459,4 +452,3 @@ function mostrarPopUpGif(urlGif, duracion = 1500) {
 // Lo hacemos accesible para todos los archivos del juego
 window.mostrarPopUpGif = mostrarPopUpGif;
 });
-

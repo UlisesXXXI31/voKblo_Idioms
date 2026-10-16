@@ -71,7 +71,7 @@ Como docente de alemán, identifiqué que la mayor barrera para el estudiante de
 *   **Gestión de Alumnos:** Herramienta interna para que los docentes puedan monitorizar el progreso detallado, lecciones completadas y puntos obtenidos por cada estudiante.
 
 ### 3. Variedad de Actividades Interactivas
-*   Módulos de **Flashcards**, **Traducción Directa**, **Emparejamiento de conceptos**, **Comprensión Auditiva** y **Pruebas de Pronunciación** (usando Web Speech API).
+* Actividades interactivas de **Flashcards**, **Transformación de frases**, **Emparejamiento**, **Elección del registro** y **Completar frases en contexto**.
 
 ---
 

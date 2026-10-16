@@ -1,4 +1,4 @@
-const CACHE_NAME = "deutschapp-page-v2"; // Subimos versión para forzar actualización
+const CACHE_NAME = "deutschapp-page-v3";
 const OFFLINE_URL = "pages/offline.html";
 
 // Actualizamos las rutas a la nueva estructura src/js y src/css
@@ -13,6 +13,11 @@ const urlsToCache = [
   './src/js/core/state.js',
   './src/js/core/ui.js',
   './src/js/core/racha.js',
+  './src/js/games/traducir.js',
+  './src/js/games/flashcards.js',
+  './src/js/games/emparejar.js',
+  './src/js/games/eleccion-multiple.js',
+  './src/js/games/contexto.js',
   './pages/offline.html'
 ];
 

@@ -3,6 +3,8 @@ let puntos = parseInt(localStorage.getItem('puntosTotales')) || 0;
 let puntosUltimaSesion = parseInt(localStorage.getItem('puntosUltimaSesionGuardados')) || 0;
 let leccionActual = null;
 let actividadActual = null;
+let actividadCompletada = false;
+let sesionActividad = 0;
 // <<< INICIO CÓDIGO RACHA >>>
 let rachaActual = parseInt(localStorage.getItem('rachaActual')) || 0;
 let ultimaFechaActividad = localStorage.getItem('ultimaFechaActividad') || null;
