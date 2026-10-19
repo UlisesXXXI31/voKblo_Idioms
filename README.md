@@ -1,10 +1,10 @@
-# voKblo -PLATAFORMA DE vOCABULARIO INTERACTIVA (B1 German)
+# voKblo -PLATAFORMA DE VOCABULARIO INTERACTIVA (B1 German)
 
 [![Live Demo](https://img.shields.io/badge/demo-online-brightgreen.svg)]
 
 ## 🔗 Enlaces del Proyecto
-* **Demo en vivo:** [Github - voKblo Frontend](https://ulisesxxxi31.github.io/voKblob1/)
-* **Repositorio del Backend (API):** [GitHub - voKblo_backend](https://github.com/UlisesXXXI31/voKblo_backend)
+* **Demo en vivo:** [Github - voKblo Frontend]([https://github.com/UlisesXXXI31/voKblo_Idioms]).
+* **Repositorio del Backend (API):** [GitHub - voKblo_backend](https://github.com/UlisesXXXI31/voKblo_Idioms_backend)
 
 ### 🚀 Acceso Rápido (Demo)
 Para facilitar la revisión del proyecto sin necesidad de crear una cuenta nueva, puedes utilizar las siguientes credenciales de prueba:
