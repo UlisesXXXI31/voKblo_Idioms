@@ -104,3 +104,4 @@ Mi misión es construir puentes entre la tecnología y la educación, creando he
 1. Clona el repositorio: `git clone https://github.com/UlisesXXXI31/vokblob1.git`
 2. Abre el archivo `index.html` usando un servidor local (ej. Live Server en VS Code).
 3. Asegúrate de tener conexión a internet para la sincronización inicial con la API de Vercel.
+4. Para probar la instalación PWA, usa `localhost` o un sitio servido por HTTPS. El indicador de instalación depende del navegador; en Chrome también puedes encontrar **Instalar voKblo** en el menú del navegador.

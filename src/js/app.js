@@ -75,48 +75,6 @@ window.gifsCopasVictoria = [
     actualizarRachaDisplay();
     
 
-     // Registro del Service Worker
-function registerServiceWorker() {
-    if ('serviceWorker' in navigator) {
-        window.addEventListener('load', function() {
-navigator.serviceWorker.register('./service-worker.js', {
-    scope: './' // <-- ¡AÑADE/CORRIGE ESTA LÍNEA!
-})
-// ... el resto de tu .then y .catch'
-            
-            .then(function(registration) {
-                console.log('✅ SW registrado correctamente con scope:', registration.scope);
-                
-                // Opcional: Verificar updates
-                registration.addEventListener('updatefound', function() {
-                    const newWorker = registration.installing;
-                    console.log('🔄 Nueva versión de SW encontrada');
-                    
-                    newWorker.addEventListener('statechange', function() {
-                        console.log('📊 Estado del nuevo SW:', newWorker.state);
-                    });
-                });
-            })
-            .catch(function(error) {
-                console.log('❌ Error registrando SW:', error);
-                
-                // Debug adicional
-                navigator.serviceWorker.getRegistrations().then(function(registrations) {
-                    console.log('📋 SWs actualmente registrados:', registrations.length);
-                });
-            });
-        });
-    } else {
-        console.log('❌ Service Worker no soportado en este navegador');
-    }
-}
-
-// Ejecutar el registro
-registerServiceWorker();
-    
-
-   
-
     // Lógica de cerrar sesión
     if (btnLogout) {
         btnLogout.addEventListener('click', () => {

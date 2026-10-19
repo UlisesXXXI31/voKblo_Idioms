@@ -13,6 +13,7 @@ const urlsToCache = [
   './src/js/core/state.js',
   './src/js/core/ui.js',
   './src/js/core/racha.js',
+  './src/js/register-service-worker.js',
   './src/js/games/traducir.js',
   './src/js/games/flashcards.js',
   './src/js/games/emparejar.js',
