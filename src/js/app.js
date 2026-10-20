@@ -3,7 +3,7 @@
 document.addEventListener("DOMContentLoaded", () => {
     const splashScreen = document.getElementById("splash-screen");
     const splashStartedAt = performance.now();
-    const minimumSplashDuration = 1500;
+    const minimumSplashDuration = 2000;
 
     function hideSplashScreen() {
         if (!splashScreen) return;
