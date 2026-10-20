@@ -1,4 +1,4 @@
-const CACHE_NAME = "deutschapp-page-v4";
+const CACHE_NAME = "deutschapp-page-v5";
 const OFFLINE_URL = "pages/offline.html";
 
 // Actualizamos las rutas a la nueva estructura src/js y src/css
