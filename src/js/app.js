@@ -1,14 +1,33 @@
 
 
 document.addEventListener("DOMContentLoaded", () => {
+    const splashScreen = document.getElementById("splash-screen");
+    const splashStartedAt = performance.now();
+    const minimumSplashDuration = 700;
 
-    
+    function hideSplashScreen() {
+        if (!splashScreen) return;
+
+        const remainingDuration = Math.max(
+            0,
+            minimumSplashDuration - (performance.now() - splashStartedAt)
+        );
+
+        window.setTimeout(() => {
+            splashScreen.classList.add("splash-screen--hidden");
+            splashScreen.addEventListener("transitionend", () => {
+                splashScreen.remove();
+            }, { once: true });
+            window.setTimeout(() => splashScreen.remove(), 350);
+        }, remainingDuration);
+    }
 
     // ---- LÓGICA DE AUTENTICACIÓN ----
     const token = localStorage.getItem('token');
     const userRole = localStorage.getItem('role');
 
     if (!token || userRole !== 'student') {
+        splashScreen?.remove();
         window.location.href = 'pages/login.html';
         return; // Detener la ejecución del script
     }
@@ -310,7 +329,7 @@ window.actualizarBarraProgreso = actualizarBarraProgreso;
     mostrarPantalla("pantalla-lecciones");
     mostrarLecciones();
     actualizarPuntos();
-    
+    hideSplashScreen();
   
 
 

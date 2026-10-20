@@ -26,6 +26,61 @@ body {
     min-height: 100vh;
 }
 
+.splash-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    background-color: #000;
+    color: #fff;
+    opacity: 1;
+    transition: opacity 300ms ease;
+}
+
+.splash-screen img {
+    width: min(55vw, 220px);
+    height: auto;
+}
+
+.splash-screen p {
+    margin: 0;
+    text-align: center;
+}
+
+.splash-loader {
+    width: 28px;
+    height: 28px;
+    border: 3px solid rgba(255, 255, 255, 0.35);
+    border-top-color: #fff;
+    border-radius: 50%;
+    animation: splash-spin 800ms linear infinite;
+}
+
+.splash-screen--hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+@keyframes splash-spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .splash-loader {
+        animation: none;
+    }
+
+    .splash-screen {
+        transition: none;
+    }
+}
+
 #app-container {
     flex-grow: 1;
     max-width: 1000px;
