@@ -1,10 +1,11 @@
-const CACHE_NAME = "deutschapp-page-v3";
+const CACHE_NAME = "deutschapp-page-v4";
 const OFFLINE_URL = "pages/offline.html";
 
 // Actualizamos las rutas a la nueva estructura src/js y src/css
 const urlsToCache = [
   './',
   './index.html',
+  './pages/login.html',
   './src/css/style.css',
   './src/js/app.js',
   './src/js/api.js',       
@@ -19,6 +20,7 @@ const urlsToCache = [
   './src/js/games/emparejar.js',
   './src/js/games/eleccion-multiple.js',
   './src/js/games/contexto.js',
+  './assets/images/android-chrome-512x512.png',
   './pages/offline.html'
 ];
 
