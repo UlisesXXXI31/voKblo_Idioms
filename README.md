@@ -1,4 +1,4 @@
-# voKblo -PLATAFORMA DE VOCABULARIO INTERACTIVA (B1 German)
+# voKblo -PLATAFORMA DE VOCABULARIO INTERACTIVA (Idioms C2 English)
 
 [![Live Demo](https://img.shields.io/badge/demo-online-brightgreen.svg)]
 
@@ -11,8 +11,8 @@ Para facilitar la revisión del proyecto sin necesidad de crear una cuenta nueva
 
 
 ### Credenciales Frontend:
-* **Usuario:** `alumno1@europaschool.org`
-* **Contraseña:** `password123`
+* **Usuario:** `alumno2@europaschool.org`
+* **Contraseña:** `52il07nj`
 
 ### Credenciales Backend:
 * **Usuario:** `prof.prueba@europaschool.org`
