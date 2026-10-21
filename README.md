@@ -35,12 +35,12 @@ Aquí puedes ver cómo luce **voKblo** en funcionamiento:
 | ![Ranking](./screenshots/ranking.png) | ![Profesor](./screenshots/panel_profesor.png) |
 
 
-**voKblo** es una aplicación web interactiva diseñada por un profesor de alemán para optimizar la adquisición de vocabulario de nivel B1. La plataforma combina principios pedagógicos de aprendizaje basado en el contexto con mecánicas de gamificación para fomentar el hábito de estudio diario.
+**voKblo** es una aplicación web interactiva diseñada por un profesor de alemán para optimizar la adquisición de idioms para alumnos de C2 de inglés . La plataforma combina principios pedagógicos de aprendizaje basado en el contexto con mecánicas de gamificación para fomentar el hábito de estudio diario.
 
 ---
 
 ## 🌟 El "Por qué" de este Proyecto
-Como docente de alemán, identifiqué que la mayor barrera para el estudiante de nivel intermedio es la retención de léxico fuera de contexto. **voKblo** soluciona esto mediante:
+Como docente de idiomas, identifiqué que la mayor barrera para el estudiante de nivel intermedio es la retención de léxico fuera de contexto. **voKblo** soluciona esto mediante:
 *   **Aprendizaje Contextual:** Cada palabra se presenta integrada en frases reales.
 *   **Gamificación Estratégica:** Sistema de puntos (XP), rachas (streaks) y clasificación global (Leaderboard).
 *   **Accesibilidad Total:** Soporte offline (PWA) para estudiar en cualquier momento y lugar.
@@ -96,12 +96,12 @@ El código sigue una estructura de directorios limpia y profesional:
 ## 👨‍💻 Sobre el Autor
 DANIEL GOMEZ RODRIGUEZ 
 *Profesor de Alemán & Desarrollador de aplicaciones enfocadas en EdTech.*  
-Mi misión es construir puentes entre la tecnología y la educación, creando herramientas digitales que no solo funcionen técnicamente, sino que resuelvan problemas reales en el aula.
+Mi misión es construir puentes entre la tecnología y la educación, creando herramientas digitales que no solo funcionen técnicamente, sino que además resuelvan problemas reales en el aula.
 
 ---
 
 ### Cómo ejecutar este proyecto localmente
-1. Clona el repositorio: `git clone https://github.com/UlisesXXXI31/vokblob1.git`
+1. Clona el repositorio: `git clone https://github.com/UlisesXXXI31/vokblo_Idioms.git`
 2. Abre el archivo `index.html` usando un servidor local (ej. Live Server en VS Code).
 3. Asegúrate de tener conexión a internet para la sincronización inicial con la API de Vercel.
-4. Para probar la instalación PWA, usa `localhost` o un sitio servido por HTTPS. El indicador de instalación depende del navegador; en Chrome también puedes encontrar **Instalar voKblo** en el menú del navegador.
+4. Para probar la instalación de la PWA, usa `localhost` o un sitio servido por HTTPS. El indicador de instalación depende del navegador; en Chrome también puedes encontrar **Instalar voKblo** en el menú del navegador.
